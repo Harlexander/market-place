@@ -13,3 +13,31 @@
       margin-left : 16rem
   }
 }
+
+/* Hide the scrollbar for webkit browsers (Chrome, Safari, etc.) */
+/* Use ::-webkit-scrollbar for Chrome, Safari, and newer versions of Edge */
+/* Use ::-webkit-scrollbar-thumb for the scrollbar thumb color (optional) */
+/* Use ::-webkit-scrollbar-track for the scrollbar track color (optional) */
+/* Use ::-webkit-scrollbar-corner for the scrollbar corner (optional) */
+
+/* For Chrome, Safari, and newer versions of Edge */
+/* The 'width' and 'height' values can be set to '0' to completely hide the scrollbar */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Optional: Change the color of the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+/* Optional: Change the color of the scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Optional: Hide the scrollbar corner */
+::-webkit-scrollbar-corner {
+  display: none;
+}

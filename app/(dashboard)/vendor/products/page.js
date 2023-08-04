@@ -4,7 +4,6 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { VendorProductItem } from '@/components/Cards/ProductItem'
-import SimpleLoader from '@/components/Loader/simpleLoader'
 import EditProduct from '@/components/Modals/EditProduct'
 
 const Index = () => {

@@ -1,40 +1,25 @@
-import ReviewsTable from '@/components/Table/ReviewsTable'
+import ReviewsTable, { UserReviewsTable } from '@/components/Table/ReviewsTable'
 import { prisma } from '@/lib/prismadb'
 import { userId } from '@/lib/userId'
-import { StarIcon, UserCircleIcon } from '@heroicons/react/20/solid'
-import { CheckBadgeIcon, ClipboardDocumentIcon, ClockIcon } from '@heroicons/react/24/outline'
-import axios from 'axios'
-import moment from 'moment/moment'
+import { StarIcon } from '@heroicons/react/20/solid'
+
 
 const Index = async () => {
   const id = await userId();
-  
-  const { store : { id : businessId }} = await prisma.user.findUnique({
-    where : {
-      id : id
-    },
-    select : {
-      store : {
-        select : {
-          id : true
-        }
-      }
-    }
-  });
 
   const reviews = await prisma.review.findMany({
     where : {
-      vendorId : businessId
+      userId : id
     },
     select : {
       comment : true,
       rating : true,
       id : true,
       createdAt : true,
-      user : {
+      vendor : {
         select : {
-          image : true,
-          username : true,
+          logo : true,
+          name : true,
           id : true
         }
       }
@@ -52,7 +37,7 @@ const Index = async () => {
             <StarIcon className='h-6 w-6'/> Your Reviews
             </p> 
             <div className="overflow-x-auto">
-              <ReviewsTable reviews={reviews}/>
+              <UserReviewsTable reviews={reviews}/>
             </div>
         </div>
     </div>

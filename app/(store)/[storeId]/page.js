@@ -48,12 +48,9 @@ const Index = async ({ params : { storeId }}) => {
             
         }
     })
-
-    console.log(vendor);
-
     return (
         <div className='md:px-10 md:grid gap-5 md:grid-cols-12 '>
-            <Overview vendor={vendor} user={session.user}/>
+            {/* <Overview vendor={vendor} user={session.user}/> */}
         </div>
     )
 }

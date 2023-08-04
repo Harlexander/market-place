@@ -1,4 +1,5 @@
 "use client"
+
 import VendorTab from '@/components/Tabs/VendorTab'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGrip, faList, faSpinner} from '@fortawesome/free-solid-svg-icons'
@@ -11,9 +12,9 @@ import moment from 'moment/moment'
 import { BuildingStorefrontIcon } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/navigation'
 import { revalidate } from '@/lib/revalidate'
+import { ScaleLoader } from 'react-spinners'
 
 const Overview = ({ vendor, user}) => {
-    const [following, setFollowing] = useState(false);
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
 
@@ -26,21 +27,9 @@ const Overview = ({ vendor, user}) => {
        const res = await axios.post("/api/follower", followerData)
         return res.data;
     }, { onSuccess : () => revalidate(startTransition, router)});
-
-    const unfollow = useMutation(async followerData => {
-        const res = await axios.delete("/api/follower/follow", { data : followerData, headers : { authorization : token }})
-        return res.data;
-    }, {
-        onSuccess: () => {
-            vendor.refetch();
-        }
-    });
     
-    const followVendor = () => {
-            follow.mutate({vendorId : vendor.id})            
-    }
-    const unfollowVendor = () => {
-            unfollow.mutate(data)            
+    const action = (status = "follow") => {
+            follow.mutate({vendorId : vendor.id, status : status, followId : vendor.follower[0]?.id})            
     }
 
   return (
@@ -56,9 +45,9 @@ const Overview = ({ vendor, user}) => {
             businessLocation={vendor.businessLocation}
         />
         <Followers 
-            followVendor={followVendor} 
-            unfollowVendor={unfollowVendor}
-            following={vendor.follower[0]} 
+            action={action} 
+            status={follow.isLoading}
+            following={vendor.follower[0] != null} 
             followers={vendor._count.follower}
             user={user}
             />
@@ -125,7 +114,9 @@ const Address = ({businessLocation}) => (
     </div>
 )
 
-const Followers = ({followers, followVendor, following, unfollowVendor, user}) => {
+const Followers = ({followers, action, following, user, status}) => {
+    let type = following ? "unfollow" : "follow";
+
     return(
         <div className='bg-white p-5 space-y-3'>
            <div className='flex justify-between items-center'>
@@ -133,8 +124,10 @@ const Followers = ({followers, followVendor, following, unfollowVendor, user}) =
             <p className='font-montserrat font-bold text-pry'>{followers}</p>
            </div>
     
-           <button onClick={() => { user ? ( following ? unfollowVendor() : followVendor() ) : (alert("Sign In First"))}} className='bg-yellow-300 font-nunito py-2 w-full'>
-            {following ? "Unfollow" : "Follow"}
+           <button onClick={() => { user ? action(type) : (alert("Sign In First"))}} className='bg-yellow-300 capitalize font-nunito py-2 w-full'>
+            {
+                status ? (<ScaleLoader height={16}/>) : (type)
+            }
            </button>
         </div>
     )

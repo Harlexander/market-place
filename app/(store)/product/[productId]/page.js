@@ -55,13 +55,6 @@ const Index = async ({ params : { productId : id } }) => {
     }
   })
 
-  console.log(data);
-
-//   const wishList = useMutation(productDetails => {
-//     axios.post("/api/products/wishlist", productDetails)
-//     .then(res => console.log(res));
-//   })
-
   return (
     <div className="space-y-12">
         <div className='md:px-10 md:grid gap-5 md:grid-cols-12 '>

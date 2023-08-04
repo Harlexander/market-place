@@ -9,25 +9,38 @@ export async function GET(req){
 export async function POST(req){
     try {
         const user = await userId();
-        const { vendorId } = await req.json() 
-        const check  = await prisma.follower.findFirst({
-            where : {
-                followerId : user,
-                followingId : vendorId
-            }
-        })
+        const { vendorId, status, followId } = await req.json() 
 
-        if(check) return NextResponse.json("User already fllowing!");
+        if(status !== "unfollow"){
+            const check  = await prisma.follower.findFirst({
+                where : {
+                    followerId : user,
+                    followingId : vendorId
+                }
+            })
 
-        const follow = await prisma.follower.create({
-            data : {
-                followerId : user,
-                followingId : vendorId
-            }
-        })
+            if(check) return NextResponse.json("User already fllowing!");
 
-        return NextResponse.json(follow)
+            const follow = await prisma.follower.create({
+                data : {
+                    followerId : user,
+                    followingId : vendorId
+                }
+            })            
+        }else{
+            const unfollow = await prisma.follower.delete({
+                where : {
+                    id : followId
+                }
+            });
+
+            // if(!unfollow) return NextResponse.json("You are not following this user!")
+        }
+
+
+        return NextResponse.json("successful!")
     } catch (error) {
-        return NextResponse(error, { status : 401 })
+        console.log(error);
+        return NextResponse.json(error, { status : 401 })
     }
 }
