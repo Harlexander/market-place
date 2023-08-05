@@ -2,10 +2,13 @@ import ProductItem from '@/components/Cards/ProductItem';
 import VendorWindow from '@/components/Cards/VendorWindow'
 import { Images } from '@/components/Product/Images';
 import { ProductDetails } from '@/components/Product/ProductDetails';
+import { authOptions } from '@/lib/authOptions';
 import { prisma } from '@/lib/prismadb'
+import { getServerSession } from 'next-auth';
 
 const Index = async ({ params : { productId : id } }) => {
   const productId = id.split("-").pop();
+  const session = await getServerSession(authOptions)
 
   const data = await prisma.product.findUnique({
     where : {
@@ -21,7 +24,8 @@ const Index = async ({ params : { productId : id } }) => {
                 slug : true,
                 vendor : {
                     select : {
-                        mobile : true
+                        mobile : true,
+                        id : true
                     }
                 }
             }
@@ -61,7 +65,7 @@ const Index = async ({ params : { productId : id } }) => {
             <div className='col-span-9 bg-white p-5 md:grid md:grid-cols-5'>
                 <>
                 <Images wishList={{}} data={data}/>
-                <ProductDetails data={data}/>
+                <ProductDetails isVendor={session?.user.role} data={data} vendorId={data?.business.vendor.id}/>
                 </>
             </div>
             <div className='col-span-3 py-8 md:py-0'>

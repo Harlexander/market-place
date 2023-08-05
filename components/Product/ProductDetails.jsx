@@ -5,8 +5,21 @@ import { Badge } from "./Badge"
 import { Description } from "./Description"
 import { Features } from "./Features"
 import moment from "moment"
+import { useRouter } from "next/navigation"
+import { useProductHighlight } from "@/hooks/useProductHighlight"
 
-export const ProductDetails = ({data}) => {
+export const ProductDetails = ({data, vendorId, isVendor}) => {
+    const router = useRouter();
+    const  { setProductId } = useProductHighlight();
+
+    console.log(isVendor);
+
+    const chatVendor = async () => {
+      const product = { productId : data.id, productName : data.name, productPrice : data.price, productImage : data.images[0].image}
+      await setProductId(product);
+
+      router.push(`/${isVendor === "BUYER" ? "dashboard" : "vendor"}/messages/${vendorId}`)
+    }
 
     return(
         <div className='col-span-3 space-y-4 md:px-8'>
@@ -22,9 +35,9 @@ export const ProductDetails = ({data}) => {
             </div>
             <Description description={data.description}/>
             <div className='flex gap-4 justify-between'>
-                <button className='py-2 border text-pry border-pry font-nunito w-full rounded-lg'>
+                <button onClick={chatVendor} className='py-2 border text-pry border-pry font-nunito w-full rounded-lg'>
                     Chat with Vendor
-                </button>
+                </button>                
                 <a className="w-full" href={`tel:${data.business.vendor.mobile}`}>
                     <button className='py-2 bg-pry text-white font-nunito w-full rounded-lg'>
                         Contact Seller

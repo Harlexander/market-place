@@ -1,4 +1,6 @@
 "use client"
+import { useProductHighlight } from '@/hooks/useProductHighlight';
+import { productImage } from '@/lib/imagePath';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PaperAirplaneIcon } from '@heroicons/react/20/solid';
@@ -6,15 +8,20 @@ import axios from 'axios';
 import React from 'react';
 
 const ChatInput = ({handleSendMessage, setMessage, message, loading}) => {
+  const { productId, productName, productImage: img, productPrice } = useProductHighlight()
   return (
     <div className="w-full bottom-0 font-nunito space-y-1">
-      <div className='bg-gray-100 p-2 rounded-t-lg flex gap-2'>
-        <img src="/user.png" alt="img" className='h-10' />
-        <div className='flex flex-col gap-2'>
-          <span className='text-sm'>Techno pop3 x, Amoled screen with gorilla glass screen with gorilla glass</span>
-          <span className='font-semibold'>N13,000</span>
-        </div>
-      </div>
+      {
+        productId && (
+          <div className='bg-gray-100 p-2 rounded-t-lg flex gap-2'>
+            <img src={productImage+img} alt="img" className='h-10' />
+            <div className='flex flex-col gap-2'>
+              <span className='text-sm'>{productName}</span>
+              <span className='font-semibold'>N{productPrice.toLocaleString()}</span>
+            </div>
+          </div>
+        )
+      }
       <div className="flex">
         <input
           type="text"

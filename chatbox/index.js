@@ -27,15 +27,17 @@ app.post('/api/messages', async (req, res) => {
     const content = await req.body;
 
     const room = generateRoomName(content.senderId, content.receiverId);
-  
+
+    const message = {
+      senderId : content.senderId,
+      receiverId : content.receiverId,
+      message : content.message,
+    }
+
+    if(content.productId) message.productId = content.productId
     // Send the message to the room representing the sender-receiver pair
     const data = await prisma.messages.create({
-      data : {
-        senderId : content.senderId,
-        receiverId : content.receiverId,
-        message : content.message,
-        productId : content.productId
-      }
+      data : message
     })
   
     io.to(room).emit('message', content);
@@ -43,7 +45,7 @@ app.post('/api/messages', async (req, res) => {
     res.json({ success : true});
   } catch (error) {
     console.log(error);
-    res.json({ err : error})
+    res.json({ err : error}, 500)
   }
 
 });
@@ -80,6 +82,24 @@ const getMessages = async (senderId, receiverId) => {
         { senderId: receiverId, receiverId: senderId },
       ],
     },
+
+    select : {
+      message : true,
+      createdAt : true,
+      isRead : true,
+      id : true,
+      senderId : true,
+      receiverId : true,
+      product : {
+        select : {
+          images : true,
+          name : true,
+          price : true,
+          id : true,
+          slug : true
+        }
+      }
+    }
   })
 
   return data;
