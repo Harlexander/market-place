@@ -47,7 +47,7 @@ const Overview = ({ vendor, user}) => {
         <Followers 
             action={action} 
             status={follow.isLoading}
-            following={vendor.follower[0] != null} 
+            following={user && (vendor.follower[0] != null)} 
             followers={vendor._count.follower}
             user={user}
             />
@@ -56,7 +56,7 @@ const Overview = ({ vendor, user}) => {
             <Reviews 
                 addReview={addReview} 
                 id={vendor.id} 
-                user={user.id}
+                user={user?.id}
                 businessReview={[...vendor.reviews].reverse()}
             />      
         </div>

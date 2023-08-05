@@ -98,7 +98,7 @@ export default function Navbar({user}) {
 export const MenuOptions = (user) => {
 
 
-  const list = user.user.role === "BUYER" ? buyerlist : sellerlist;
+  const list = user?.user?.role === "BUYER" ? buyerlist : sellerlist;
 
   return (
     <div className="">
@@ -106,7 +106,7 @@ export const MenuOptions = (user) => {
         <div>
           <Menu.Button className="px-2 py-1 rounded text-pry bg-white rounded-full flex items-center gap-2">
             <UserCircleIcon className='h-8'/>
-            Hey! {user.user.username}
+            Hey! {user?.user?.username} {!user?.user && "Sign in"}
             <ChevronDownIcon className='h-5'/>
           </Menu.Button>
         </div>
