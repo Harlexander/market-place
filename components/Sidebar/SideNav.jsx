@@ -1,8 +1,8 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 
-export default function SideMenu({children, open, setOpen, bg="bg-gray-300"}) {
+export default function SideMenu({children, open, setOpen, bg="bg-gray-50"}) {
 
   return (
     <div className="bg-white">
@@ -43,11 +43,9 @@ export default function SideMenu({children, open, setOpen, bg="bg-gray-300"}) {
                   </button>
                 </div>
 
-                {/* 
-                Content Goes here
-                */}
-
-                {children}
+                {
+                  children
+                }
               </Dialog.Panel>
             </Transition.Child>
           </div>

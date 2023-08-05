@@ -13,9 +13,9 @@ const ProductItem = ({name, price, brandNew, image, id="#", slug, wishlist, remo
             {
                 brandNew && <span class="text-xs m-3 font-lato absolute shadow-xl top-0 right-0 inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline bg-yellow-500 text-white rounded-full">Brand New</span>
             }
-            <img src={productImage+image} className='object-cover w-full h-48 rounded-t-lg'/>
+            <img src={productImage+image} className='object-contain w-full h-48 rounded-t-lg'/>
             <div className='py-4 px-3 justify-between flex flex-col flex-grow space-y-1'>
-                <p className='font-nunito text-sm'>{name.substr(0, 50)}...</p>
+                <p className='font-nunito text-sm'>{name.substr(0, 20)}...</p>
                 <p className='font-montserrat font-bold text-pry text-lg'>N{price.toLocaleString()}</p>
             </div>
 

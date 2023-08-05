@@ -1,3 +1,4 @@
+import Register from '@/components/Ads/Register';
 import ProductItem from '@/components/Cards/ProductItem';
 import SectionHeader from '@/components/Headers/SectionHeader'
 import { Select } from '@/components/HeroPage/HeroPage';
@@ -17,22 +18,22 @@ const Index = async ({ params : { category : id }}) => {
   const { subcategories } = categories.find(item => item.category.toLowerCase() == category);
 
   return (
-    <div className='space-y-4'>
+    <>
       <SectionHeader title={decodeURIComponent(category)}/>
 
-      <div className='w-full overflow-hidden'>
+      <div className='w-full hidden sm:block overflow-hidden'>
           <div className='flex gap-4 w-full overflow-x-auto'>
-              {
-                  subcategories.map((item, index) => (
-                      <Select href={`/category/${category}/${item.replace(/ /g, "-")}`} key={index} name={item}/>
-                  ))
-              }
-          </div>                    
+                {
+                    subcategories.map((item, index) => (
+                        <Select href={`/category/${category}/${item.replace(/ /g, "-")}`} key={index} name={item}/>
+                    ))
+                }
+            </div>  
       </div>
 
-      <div className='grid grid-cols-2 md:grid-cols-5 gap-3'>
+      <div className='grid w-full grid-cols-2 md:grid-cols-5 gap-3'>
                 {
-                  products.map(({name, price, images, id, brand_new, slug}, index) => (
+                  [...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products].map(({name, price, images, id, brand_new, slug}, index) => (
                         <ProductItem
                         key={index}
                         brandNew={brand_new}
@@ -43,8 +44,8 @@ const Index = async ({ params : { category : id }}) => {
                         id={id}/>                    
                     ))
                 }
-                </div>
-    </div>
+      </div>
+    </>
   )
 }
 

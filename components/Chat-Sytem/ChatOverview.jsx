@@ -1,22 +1,29 @@
 'use client'
-import { EnvelopeOpenIcon } from '@heroicons/react/24/outline'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import OpenChatList from './OpenChatList'
-import { useSession } from 'next-auth/react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
+import socket from '@/lib/socket'
 
-const ChatOverview = ({children}) => {
-  const { data = [], isLoading } = useQuery("openChat", async () => {
-    const { data } = await axios.get("/api/messages");
+const ChatOverview = ({children, userId}) => {
+  const [ data, setData ] = useState([]);
 
-    return data;
-  })
+  useEffect(() => {
+    socket.emit("get_messages", userId);
+    socket.on("active_messages", (msgs) => setData(msgs))
+    socket.on("connect", () => console.log("connected"))
+    return () => {
+      socket.off("get_messages")
+      socket.off("active_messages")
+      socket.off("connect")
+    }
+  }, []);
 
-  console.log(data);
+  console.log(data)
+
   return (
     <div className='grid md:grid-cols-12 gap-2 w-full overflow-hidden flex-1 h-full border'>
-        <div className='md:col-span-4 bg-white h-full w-full overflow-y-auto'>
+        <div className='md:col-span-4 hidden sm:block bg-white h-full w-full overflow-y-auto'>
           <OpenChatList data={data}/>
         </div>
         <div className='md:col-span-8 h-full w-full bg-white overflow-y-auto'>

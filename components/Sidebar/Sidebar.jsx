@@ -53,7 +53,7 @@ const Sidebar = ({navigation, userNavigation, logo}) => {
                         </li>
                     ) : (
                         <li className="relative" key={index}>
-                            <Link href={href} legacyBehavior key={index}>
+                            <Link shallow href={href} legacyBehavior key={index}>
                                 <a className="flex justify-between items-center gap-5 text-sm py-4 px-6 h-12 overflow-hidden text-gray-600 text-ellipsis whitespace-nowrap rounded hover:text-pry hover:bg-pry-200 transition duration-300 ease-in-out" href="#!" data-mdb-ripple="true" data-mdb-ripple-color="primary">
                                     <div className='flex gap-5'>
                                         {icon}

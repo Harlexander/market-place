@@ -5,16 +5,9 @@ import { Bars3CenterLeftIcon, Bars3Icon, EllipsisHorizontalCircleIcon, EllipsisH
 import SearchInput from '../Input/searchInput'
 import SideMenu from '../Sidebar/SideNav'
 import { useState } from 'react'
-import { ShoppingBagIcon, UserCircleIcon } from '@heroicons/react/24/outline'
-
-const navigation = [
-  { name: 'Markek place', href: '/', current: true },
-  { name: 'About Us', href: '/about', current: false },
-  { name: 'Blog', href: '/login', current: false },
-  { name: 'Terms', href: '/login', current: false },
-  { name: 'Contact', href: '/login', current: false }
-]
-
+import { MenuOptions, buyerlist, sellerlist } from './navbar'
+import categories from '@/lib/categories'
+import { ChevronRightIcon, CubeIcon } from '@heroicons/react/20/solid'
 const logo = "next.svg"
 
 const styles = {
@@ -24,14 +17,15 @@ const styles = {
   font: "font-[nunito]"
 }
 
-export default function PagesNavbar() {
+export default function PagesNavbar({user}) {
   const [open, setOpen] = useState(false);
-
-  const user = {}
+  const links = user?.user?.role === "BUYER" ? buyerlist : sellerlist
 
   return (
     <div>
-    <SideMenu open={open} setOpen={setOpen}/>
+    <SideMenu open={open} setOpen={setOpen} user={user} children={
+      <SideMenuContent links={links}/>
+    }/>
     <nav as="nav" className={`z-10 w-full shadow-md ${styles.bg} ${styles.opacity} ${styles.position} ${styles.font}`}>
       <>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -60,17 +54,7 @@ export default function PagesNavbar() {
               </div>
 
               <div className='flex gap-6 items-center'>
-                      <Link href={user ? "/user/wishlist" : "/login"} class="relative cursor-pointer">
-                        <ShoppingBagIcon className="h-7 text-white" />
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1.5 text-xs font-bold leading-none text-pry transform translate-x-1/2 -translate-y-1/2 bg-white rounded-full">
-                          3
-                        </span>
-                      </Link>
-                      
-                    
-                      <Link href={user ? "/user/" : "/login"} className='cursor-pointer'>
-                        <UserCircleIcon className='h-8 text-white'/>
-                      </Link>
+                  <MenuOptions user={user}/>
               </div>
             </div>
           </div>
@@ -81,5 +65,51 @@ export default function PagesNavbar() {
   </div>
   </div>
 
+  )
+}
+
+const SideMenuContent = ({links}) => {
+  return(
+    <div className='p-4 space-y-4'>
+    <div className='space-y-1'>
+      <p className='font-semibold text-yellow-600 font-nunito'>Top Categories</p>
+
+      <ul className='text-sm font-nunito'>
+        {
+          categories.map((item) => (
+            <Link href={`/${item.category.replace(/ /g, "-")}`}>
+              <li key={item} className='capitalize flex items-center justify-between gap-3 py-2'> 
+                  <span className='flex gap-3 items-center'>
+                    <CubeIcon className='h-4 text-pry'/>{item.category} 
+                  </span>
+                  <ChevronRightIcon className='h-4'/>
+              </li>                          
+            </Link>
+
+          ))
+        }
+      </ul>
+    </div>
+
+    <div className='space-y-1'>
+      <p className='font-semibold text-yellow-600 font-nunito'>My Account</p>
+
+      <ul className='text-sm font-nunito'>
+        {
+          links.map((item) => (
+            <Link href={`/${item.href}`}>
+              <li key={item.title} className='capitalize flex items-center justify-between gap-3 py-2'> 
+                  <span className='flex gap-3 items-center'>
+                    {item.icon}{item.title} 
+                  </span>
+                  {/* <ChevronRightIcon className='h-4'/> */}
+              </li>                          
+            </Link>
+
+          ))
+        }
+      </ul>
+    </div>
+  </div>
   )
 }

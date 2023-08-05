@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React from 'react'
 
@@ -8,8 +9,9 @@ const OpenChatList = ({data}) => {
         {
             data.map(({id, username, store, lastMessage : { createdAt, message, senderId, isRead }}) => (
                 <ChatListContainer
+                key={id}
                 name={store ? store.name : username}
-                store={store === null}
+                store={store == null}
                 message={message}
                 createdAt={createdAt}
                 sender={senderId !== id}
@@ -22,8 +24,10 @@ const OpenChatList = ({data}) => {
 }
 
 const ChatListContainer = ({name, id, store, message, createdAt, sender, unread}) => {
+    const { data } = useSession();
+
     return(
-        <Link href={`/${store ? "vendor" : "dashboard"}/messages/${id}`}>
+        <Link href={`/${data?.user?.role === "BUYER" ? "dashboard" : "vendor"}/messages/${id}`}>
             <div className='grid border-b py-2 grid-cols-12 gap-1 px-3 hover:bg-pry-200 cursor-pointer'>
                 <div className='col-span-2 flex justify-center items-center'>
                     <img src="/user.jpg" className='h-12 w-12 rounded-full' alt="" />

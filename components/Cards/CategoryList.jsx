@@ -7,9 +7,9 @@ import categories from '@/lib/categories'
 
 const CategoryList = () => {
   return (
-    <div className='yrounded-lg'>
-        <div className='bg-pry p-4 rounded-t-lg'>
-            <p className='font-montserrat text-white'>Categories</p>
+    <div className='rounded-lg sticky top-28 bg-white'>
+        <div className='bg-pry px-4 py-2 rounded-t-lg'>
+            <p className='font-montserrat text-white text-lg'>Categories</p>
         </div>
         <div className='py-5'>
             {

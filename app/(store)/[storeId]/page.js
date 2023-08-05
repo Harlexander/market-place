@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prismadb"
 import Overview from "./components/Overview"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/authOptions"
+import Breadcrumb from "@/components/Breadcrumb Menu/Breadcrumb"
 
 const Index = async ({ params : { storeId }}) => {
     const session = await getServerSession(authOptions);
@@ -48,10 +49,25 @@ const Index = async ({ params : { storeId }}) => {
             
         }
     })
+
+    const path = [
+        {
+            title : "Home",
+            href : "/"
+        },
+        {
+            title : vendor.name,
+            href : `/${vendor.slug}`
+        }
+    ]
     return (
-        <div className='md:px-10 md:grid gap-5 md:grid-cols-12 '>
-            <Overview vendor={vendor} user={session?.user}/>
-        </div>
+        <>
+            <Breadcrumb items={path}/>
+            <div className='md:px-10 md:grid gap-5 md:grid-cols-12 '>
+                <Overview vendor={vendor} user={session?.user}/>
+            </div>        
+        </>
+
     )
 }
 

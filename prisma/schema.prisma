@@ -96,6 +96,7 @@ model Messages {
   product     Product? @relation(fields: [productId], references: [id])
   createdAt   DateTime @default(now())
   isRead      Boolean @default(false)
+  isOpened    Boolean @default(false)
 }
 
 model Wishlist {

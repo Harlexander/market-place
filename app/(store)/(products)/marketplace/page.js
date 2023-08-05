@@ -1,9 +1,37 @@
-import CategoryList from '@/components/Cards/CategoryList'
 import ProductItem from '@/components/Cards/ProductItem'
 import SectionHeader from '@/components/Headers/SectionHeader'
+import { prisma } from '@/lib/prismadb';
+import { getServerSession } from 'next-auth';
 import React from 'react'
 
-const Index = () => {
+const Index = async () => {
+  const latestProducts = await prisma.product.findMany({
+    orderBy : {
+      createdAt : "desc"
+    },
+    select : {
+      name : true,
+      price : true,
+      slug : true,
+      id : true,
+      images : true
+    },
+    take : 12
+  });
+
+  const topProducts = await prisma.product.findMany({
+    orderBy : {
+      views : "desc"
+    },
+    select : {
+      name : true,
+      price : true,
+      slug : true,
+      id : true,
+      images : true
+    },
+    take : 12
+  });
   return (
      <>
         <SectionHeader title={"Marketplace"}/>

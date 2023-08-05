@@ -4,7 +4,7 @@ import React from 'react'
 
 const VendorWindow = ({data}) => {
   return (
-    <div className='bg-pry px-3 py-5 text-white space-y-5 shadow'>
+    <div className='bg-pry sticky top-28  px-3 py-5 text-white space-y-5 shadow'>
         <p className='font-lato font-bold'>VENDOR INFORMATION</p>
 
         <div className='grid grid-cols-12 gap-4'>

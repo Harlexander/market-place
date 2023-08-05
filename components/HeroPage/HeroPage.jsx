@@ -1,3 +1,4 @@
+"use client"
 import categories from '@/lib/categories'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
@@ -25,7 +26,7 @@ const HeroPage = () => {
                 categories.map(({category, subcategories}, index) => (
                     <Select
                     key={index}
-                    href={`/c/${category}/${subcategories[0]}`}
+                    href={`/category/${category.replace(/ /g, "-")}/${subcategories[0].replace(/ /g, "-")}`}
                     name={subcategories[0]}/>
                 ))
             }

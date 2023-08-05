@@ -30,7 +30,7 @@ const Index = async ({ params : { subcategoryId : id }}) => {
                         id={id}/>                    
                     ))
                 }
-                </div>
+        </div>
     </div>
   )
 }

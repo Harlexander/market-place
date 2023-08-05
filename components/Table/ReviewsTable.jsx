@@ -122,7 +122,7 @@ export const UserReviewsTable = ({reviews}) => {
   )
 }
 
-const MenuButton = () => {
+export const MenuButton = () => {
   return (
     <div className="">
       <Menu as="div" className="relative inline-block text-left">
