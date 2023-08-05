@@ -77,7 +77,7 @@ const SideMenuContent = ({links}) => {
       <ul className='text-sm font-nunito'>
         {
           categories.map((item) => (
-            <Link key={item.category} href={`/${item.category.replace(/ /g, "-")}`}>
+            <Link key={item.category} href={`/category/${item.category.replace(/ /g, "-")}`}>
               <li key={item} className='capitalize flex items-center justify-between gap-3 py-2'> 
                   <span className='flex gap-3 items-center'>
                     <CubeIcon className='h-4 text-pry'/>{item.category} 
@@ -97,7 +97,7 @@ const SideMenuContent = ({links}) => {
       <ul className='text-sm font-nunito'>
         {
           links.map((item) => (
-            <Link key={item.title} href={`/${item.href}`}>
+            <Link key={item.title} href={`/dashboard/${item.href}`}>
               <li key={item.title} className='capitalize flex items-center justify-between gap-3 py-2'> 
                   <span className='flex gap-3 items-center'>
                     {item.icon}{item.title} 
