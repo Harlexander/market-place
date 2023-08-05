@@ -7,13 +7,13 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import React, { useState } from 'react'
 import { useMutation } from 'react-query';
-import Toggler from './components/Toggler';
 import categories from '@/lib/categories';
 import { storeImage } from '@/hooks/useProductImage';
 import { removeSymbols } from '@/lib/removeSymbols';
 import { Badge } from '../Product/Badge';
 import { Description } from '../Product/Description';
 import { Features } from '../Product/Features';
+import Toggler from './Components/Toggler';
 
 const AddProduct = () => {
   const [preview, setPreview] = useState(false);
