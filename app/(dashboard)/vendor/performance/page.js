@@ -1,7 +1,7 @@
+"use client"
+import PageVisits from '@/components/Analytics/PageVisits'
 import { ChartBarIcon } from '@heroicons/react/24/solid'
 import React from 'react'
-import PageVisits from '../../../components/Analytics/PageVisits'
-import Dashboard from '../../../layout/dashboard'
 
 const Index = () => {
   return (
