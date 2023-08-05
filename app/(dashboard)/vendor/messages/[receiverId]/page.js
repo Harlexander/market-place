@@ -14,7 +14,7 @@ const Index = ({ params : { receiverId }}) => {
     const { data , status } = useSession();
     const [ messages, setMessages ] = useState([]);
     const [message, setMessage] = useState("");
-    const { productId } = useProductHighlight();
+    const { productId, productName, productPrice, productImage } = useProductHighlight();
 
     useEffect(() => {
       if(status === 'authenticated'){
@@ -43,17 +43,25 @@ const Index = ({ params : { receiverId }}) => {
       }
     }, [status])
 
-    console.log("productId", productId)
-
     const { mutate, isLoading, data : result} = useMutation(async content => await handleSendMessage(content), { onSuccess : () => setMessage("")})
 
     const handleMessage = (e) => setMessage(e.target.value);
+
+    const sendMessage = () => {
+        const content = {
+            senderId : data?.user?.id,
+            receiverId, 
+            message, 
+            productId : productId
+        }
+        socket.emit("message", content);
+    }
 
   return (
     <div className='p-4 h-full flex justify-between flex-col gap-2'>
         <Chat messages={messages} senderId={data?.user?.id}/>
         <div className='flex-shrink'>
-            <ChatInput handleSendMessage={() => mutate({senderId : data?.user?.id, receiverId, message, productId : productId})} setMessage={handleMessage} message={message} loading={isLoading}/>
+            <ChatInput handleSendMessage={sendMessage} setMessage={handleMessage} message={message} loading={isLoading}/>
         </div>
     </div>
   )

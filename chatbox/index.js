@@ -34,7 +34,9 @@ app.post('/api/messages', async (req, res) => {
       message : content.message,
     }
 
-    if(content.productId) message.productId = content.productId
+    // if(content?.productId.productId) message.productId = content?.productId.productId
+
+    console.log(content)
     // Send the message to the room representing the sender-receiver pair
     const data = await prisma.messages.create({
       data : message
@@ -45,7 +47,7 @@ app.post('/api/messages', async (req, res) => {
     res.json({ success : true});
   } catch (error) {
     console.log(error);
-    res.json({ err : error}, 500)
+    res.status(500).json({ err : error})
   }
 
 });
@@ -54,9 +56,45 @@ app.post('/api/messages', async (req, res) => {
 io.on('connection', async (socket) => {
   console.log('A user connected');
 
-  const {senderId, receiverId} = socket.handshake.query;
+  socket.on('message', async (msg) => {
+    const { senderId, receiverId, message, productId } = msg;
 
-  const room = `${senderId}-${receiverId}`;
+    // Save the message to the database
+    try {
+      let product;
+      if(productId){
+          product = await prisma.product.findUnique({
+          where : {
+            id : productId
+          },
+          select : {
+            name : true,
+            price : true,
+            images : true,
+            id : true
+          }
+        })
+      }
+      
+      const content = {
+        senderId, 
+        receiverId,
+        message
+      }
+
+      if(productId) message.productId = productId;
+
+      const savedMessage = await prisma.messages.create({
+        data: content,
+      });
+
+      // Emit the message to the room
+      const room = generateRoomName(senderId, receiverId);
+      io.to(room).emit('message', {...content, product});
+    } catch (error) {
+      console.error('Error saving message:', error);
+    }
+  });
 
   // Handle joining the room based on sender-receiver pair
   socket.on("join", async ({senderId, receiverId}) => {
