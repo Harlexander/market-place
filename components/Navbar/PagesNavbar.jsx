@@ -105,7 +105,6 @@ const SideMenuContent = ({links}) => {
                   {/* <ChevronRightIcon className='h-4'/> */}
               </li>                          
             </Link>
-
           ))
         }
       </ul>
