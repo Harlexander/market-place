@@ -23,9 +23,9 @@ export default function PagesNavbar({user}) {
 
   return (
     <div>
-    <SideMenu open={open} setOpen={setOpen} user={user} children={
+    <SideMenu open={open} setOpen={setOpen} user={user}>
       <SideMenuContent links={links}/>
-    }/>
+    </SideMenu>
     <nav as="nav" className={`z-10 w-full shadow-md ${styles.bg} ${styles.opacity} ${styles.position} ${styles.font}`}>
       <>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,7 +77,7 @@ const SideMenuContent = ({links}) => {
       <ul className='text-sm font-nunito'>
         {
           categories.map((item) => (
-            <Link href={`/${item.category.replace(/ /g, "-")}`}>
+            <Link key={item.category} href={`/${item.category.replace(/ /g, "-")}`}>
               <li key={item} className='capitalize flex items-center justify-between gap-3 py-2'> 
                   <span className='flex gap-3 items-center'>
                     <CubeIcon className='h-4 text-pry'/>{item.category} 
@@ -97,7 +97,7 @@ const SideMenuContent = ({links}) => {
       <ul className='text-sm font-nunito'>
         {
           links.map((item) => (
-            <Link href={`/${item.href}`}>
+            <Link key={item.title} href={`/${item.href}`}>
               <li key={item.title} className='capitalize flex items-center justify-between gap-3 py-2'> 
                   <span className='flex gap-3 items-center'>
                     {item.icon}{item.title} 

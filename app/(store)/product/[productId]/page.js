@@ -102,7 +102,7 @@ const Index = async ({ params : { productId : id } }) => {
                 <div className='flex gap-4 overflow-x-auto pt-2 pb-4'>
                     {
                         similarProducts.map((item, index) => (
-                            <div className='flex-shrink-0'>
+                            <div className='flex-shrink-0' key={index}>
                                 <ProductItem
                                     key={index}
                                     slug={item.slug}
@@ -127,7 +127,7 @@ const Index = async ({ params : { productId : id } }) => {
                         <div className='flex gap-4 overflow-x-auto pt-2 pb-4'>
                         {
                                 vendorProducts.map((item, index) => (
-                                    <div className='flex-shrink-0'>
+                                    <div className='flex-shrink-0' key={index}>
                                         <ProductItem
                                             key={index}
                                             id={item.id}

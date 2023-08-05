@@ -13,7 +13,9 @@ const Index = async({children}) => {
             <p className='bg-pry flex items-center gap-4 justify-center rounded-t-lg text-center py-2 text-white font-montserrat text-xl'>
             <EnvelopeIcon className='h-6 w-6'/> Messages 
             </p>  
-            <ChatOverview userId={session?.user?.id} children={children}/>  
+            <ChatOverview userId={session?.user?.id}>
+              {children}
+            </ChatOverview>  
         </div>
     </div>
   )
