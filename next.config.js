@@ -4,7 +4,7 @@ const nextConfig = {
         serverActions: true,
     },
     env : {
-        SOCKET_URL : "http://localhost:5000"
+        SOCKET_URL : "https://messaging-ts4x.onrender.com"
     }
 }
 
