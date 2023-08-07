@@ -33,7 +33,7 @@ const ChatProvider = ({receiverId}) => {
               setMessages((prevMessages) => [...prevMessages, msg]);
             }
             setLoading(false);
-            setUser(user);
+            user && setUser(user);
             setMessage("");
           })
 
@@ -66,6 +66,8 @@ const ChatProvider = ({receiverId}) => {
         }
         socket.emit("message", content);
     }
+
+    console.log(user)
 
   return (
     <div className='p-4 h-full flex justify-between flex-col gap-2'>
