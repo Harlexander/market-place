@@ -30,7 +30,7 @@ export default function Navbar({user}) {
 
   return (
     <div>
-          <Disclosure as="nav" className={`z-10 w-full  ${styles.bg} ${styles.opacity} ${styles.position} ${styles.font}`}>
+          <Disclosure as="nav" className={`z-10 w-full shadow-lg ${styles.bg} ${styles.opacity} ${styles.position} ${styles.font}`}>
     {({ open }) => (
       <>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -104,8 +104,8 @@ export const MenuOptions = (user) => {
     <div className="">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="px-2 py-1 rounded text-pry bg-white rounded-full flex items-center gap-2">
-            <UserCircleIcon className='h-8'/>
+          <Menu.Button className="sm:px-2 text-sm sm:text-md px-1 sm:py-1 py-1 rounded text-white bg-opacity-10 bg-white rounded-full flex items-center gap-0.5 sm:gap-2">
+            <UserCircleIcon className='h-7 sm:h-8'/>
             Hey! {user?.user?.username} {!user?.user && "Sign in"}
             <ChevronDownIcon className='h-5'/>
           </Menu.Button>

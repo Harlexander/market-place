@@ -17,7 +17,7 @@ const VendorWindow = ({data}) => {
                     <CheckBadgeIcon className='h-6 text-blue-500'/>
                 </div>
                 <div>
-                    <p className='font-nunito text-sm'>{data.description}</p>
+                    <p className='font-nunito text-sm'>{data.description || `At ${data.name}, we are committed to excellence. Offering top-quality products and services tailored to your needs. Your satisfaction is our priority. Experience the best with us!`}</p>
                 </div>
                 <div className='flex gap-2 font-nunito'>
                     <button className='bg-yellow-300 text-pry text-xs py-1 px-5'>Follow</button>

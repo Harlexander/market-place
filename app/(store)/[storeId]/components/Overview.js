@@ -1,9 +1,8 @@
 "use client"
 
-import VendorTab from '@/components/Tabs/VendorTab'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGrip, faList, faSpinner} from '@fortawesome/free-solid-svg-icons'
-import { ChevronRightIcon, ClockIcon, EnvelopeIcon, MinusCircleIcon, PlusCircleIcon, StarIcon } from '@heroicons/react/20/solid'
+import {  ClockIcon, EnvelopeIcon, MinusCircleIcon, PlusCircleIcon, StarIcon } from '@heroicons/react/20/solid'
 import React, { useEffect, useState, useTransition } from 'react'
 import ProductItem from '@/components/Cards/ProductItem'
 import { useMutation, useQuery } from 'react-query'
@@ -13,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import { revalidate } from '@/lib/revalidate'
 import { ScaleLoader } from 'react-spinners'
 import { followUser, newReview } from '@/lib/fetcher'
+import { Tab } from '@headlessui/react'
 
 const Overview = ({ vendor, user}) => {
     const [isPending, startTransition] = useTransition();
@@ -62,7 +62,7 @@ const Overview = ({ vendor, user}) => {
             />
         </div>   
         <div className='md:hidden'>
-            <Tab 
+            <Tabs
                 products={vendor.products} 
                 addReview={addReview} 
                 brandUid={vendor.uid} 
@@ -82,10 +82,10 @@ const Vendor = ({brandName, description, createdAt, type}) => (
             </div>
             <div className='col-span-8 space-y-2'>
                 <div>
-                <p className='font-lato font-bold text-lg capitalize'>{brandName}</p>
+                <p className='font-lato font-bold text-xl capitalize'>{brandName}</p>
 
                 </div>
-                <p className='font-nunito'>{description}</p>
+                <p className='font-nunito'>{description || `At ${brandName}, we are committed to excellence. Offering top-quality products and services tailored to your needs. Your satisfaction is our priority. Experience the best with us!`}</p>
             </div>
         </div>
 
@@ -129,7 +129,7 @@ const Followers = ({followers, action, following, user, status}) => {
 
 const Reviews = ({addReview, user, businessReview, id}) => {    
     const [comment, setComment] = useState("");
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(1);
 
     const incrementCount = () => {
       if (count < 5) {
@@ -151,7 +151,7 @@ const Reviews = ({addReview, user, businessReview, id}) => {
     }
 
     return (
-        <div className='bg-white space-y-3 p-5'>
+        <div className='bg-white space-y-3 sm:p-5 p-2'>
             <p className='font-bold font-lato hidden md:block'> Reviews</p>
     
     
@@ -220,12 +220,12 @@ const ReviewContainer = ({review}) => (
 const Products = ({products}) => {
     return ( 
         <div className='bg-white h-full'>
-            <div className='bg-pry text-white  px-4 py-3 flex justify-between items-center'>
+            <div className='bg-pry text-white rounded-xl sm:rounded-0  px-4 py-3 flex justify-between items-center'>
                 <div className='flex gap-3'>
                     <FontAwesomeIcon icon={faGrip} className="text-xl text-white"/>
                     <FontAwesomeIcon icon={faList} className="text-xl text-white"/>
                 </div>
-                <div className='flex font-lato gap-3 text-sm'>
+                <div className='flex font-nunito gap-3 text-sm'>
                     <p>Sort by:</p>
                     <select className='bg-transparent'>
                         <option className='text-black py-2'>Recommended</option>
@@ -236,7 +236,7 @@ const Products = ({products}) => {
                 </div>
             </div>
     
-            <div className='grid grid-cols-2 md:grid-cols-4 gap-5 py-5 px-5'>
+            <div className='grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 py-5 sm:px-5'>
                 {
                     products.map(({name, price, images, id, slug}, index) => (
                         <ProductItem
@@ -251,28 +251,71 @@ const Products = ({products}) => {
             </div>
         </div>
     )
-    
 }
-const Tab = ({products, brandUid, businessReview, addReview }) => (
-    <div>
-        <VendorTab
-        products={
-        <Products 
-            products={products}
-        />}
 
-        reviews={
-        <Reviews 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
+
+const Tabs = ({products, brandUid, businessReview, addReview }) => (
+    <div className="w-full max-w-md px-2 py-4 sm:px-0 font-nunito">
+      <Tab.Group>
+        <Tab.List className="flex space-x-1 rounded-xl bg-pry-200 p-1">
+            <Tab
+              className={({ selected }) =>
+                classNames(
+                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-pry-700',
+                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-pry-400 focus:outline-none',
+                  selected
+                    ? 'bg-white shadow'
+                    : 'text-pry-100 hover:bg-white/[0.12] hover:text-white'
+                )
+              }
+            >
+              Products
+            </Tab>
+            <Tab
+              className={({ selected }) =>
+                classNames(
+                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-pry-700',
+                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-pry-400 focus:outline-none',
+                  selected
+                    ? 'bg-white shadow'
+                    : 'text-pry-100 hover:bg-white/[0.12] hover:text-white'
+                )
+              }
+            >
+              Reviews
+            </Tab>
+        </Tab.List>
+        <Tab.Panels className="mt-2">
+            <Tab.Panel
+              className={classNames(
+                'rounded-xl bg-white p-3',
+                'ring-white ring-opacity-60 ring-offset-2 ring-offset-pry-400 focus:outline-none'
+              )}
+            >
+            <Products 
+                products={products}/>
+            </Tab.Panel>
+            <Tab.Panel
+              className={classNames(
+                'rounded-xl bg-white p-3',
+                'ring-white ring-opacity-60 ring-offset-2 ring-offset-pry-400 focus:outline-none'
+              )}
+            >
+            <Reviews 
             businessReview={businessReview}
             brandUid={brandUid}
             addReview={addReview}/>
-        }
-        />
+            </Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
     </div>
 )
 
 const Badge = ({content, color}) => (
-    <span class={`text-xs inline-block flex gap-3 items-center py-1 px-2 md:px-4 font-nunito leading-none text-center whitespace-nowrap align-baseline  ${color} rounded-full`}>{content}</span>
+    <span class={`text-xs inline-block flex gap-3 items-center py-1 px-4 md:px-4 font-nunito leading-none text-center whitespace-nowrap align-baseline  ${color} rounded-full`}>{content}</span>
 )
 
 export default Overview

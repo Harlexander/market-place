@@ -8,13 +8,13 @@ import { useState } from 'react'
 import { MenuOptions, buyerlist, sellerlist } from './navbar'
 import categories from '@/lib/categories'
 import { ChevronRightIcon, CubeIcon } from '@heroicons/react/20/solid'
-const logo = "next.svg"
+const logo = "/next.svg"
 
 const styles = {
   bg : "bg-pry",
   opacity: "bg-opacity-100",
   position: "fixed",
-  font: "font-[nunito]"
+  font: "font-nunito"
 }
 
 export default function PagesNavbar({user}) {
@@ -26,7 +26,7 @@ export default function PagesNavbar({user}) {
     <SideMenu open={open} setOpen={setOpen} user={user}>
       <SideMenuContent links={links}/>
     </SideMenu>
-    <nav as="nav" className={`z-10 w-full shadow-md ${styles.bg} ${styles.opacity} ${styles.position} ${styles.font}`}>
+    <nav as="nav" className={`z-10 w-full shadow-xl ${styles.bg} ${styles.opacity} ${styles.position} ${styles.font}`}>
       <>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
@@ -44,7 +44,7 @@ export default function PagesNavbar({user}) {
               </button>
               </div>
 
-              <img src={logo} className='h-8'/>
+              <img src={logo} className='h-12'/>
 
               <div className="hidden md:block flex-3 flex-grow self-end ">
                 <SearchInput

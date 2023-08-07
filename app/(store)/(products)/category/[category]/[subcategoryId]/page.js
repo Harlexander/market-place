@@ -1,6 +1,7 @@
 import ProductItem from '@/components/Cards/ProductItem';
 import SectionHeader from '@/components/Headers/SectionHeader'
 import { Select } from '@/components/HeroPage/HeroPage';
+import categories from '@/lib/categories';
 import { prisma } from '@/lib/prismadb'
 import React from 'react'
 
@@ -16,6 +17,16 @@ const Index = async ({ params : { subcategoryId : id }}) => {
   return (
     <div className='space-y-4'>
       <SectionHeader title={subCategory}/>
+
+      <div className='w-full hidden sm:block overflow-hidden'>
+          <div className='flex gap-4 w-full overflow-x-auto'>
+                {
+                    subcategories.map((item, index) => (
+                        <Select href={`/category/${category.replace(/ /g, '-')}/${item.replace(/ /g, "-")}`} key={index} name={item}/>
+                    ))
+                }
+            </div>  
+      </div>
 
       <div className='grid grid-cols-2 md:grid-cols-5 gap-3'>
                 {

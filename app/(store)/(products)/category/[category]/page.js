@@ -25,7 +25,7 @@ const Index = async ({ params : { category : id }}) => {
           <div className='flex gap-4 w-full overflow-x-auto'>
                 {
                     subcategories.map((item, index) => (
-                        <Select href={`/category/${category}/${item.replace(/ /g, "-")}`} key={index} name={item}/>
+                        <Select href={`/category/${category.replace(/ /g, '-')}/${item.replace(/ /g, "-")}`} key={index} name={item}/>
                     ))
                 }
             </div>  

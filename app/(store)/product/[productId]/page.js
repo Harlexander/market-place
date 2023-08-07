@@ -99,10 +99,10 @@ const Index = async ({ params : { productId : id } }) => {
                     <p className='font-montserrat text-sm md:text-lg font-semibold text-white'>Similar Products</p>
                 </div>
 
-                <div className='flex gap-4 overflow-x-auto pt-2 pb-4'>
+                <div className='flex gap-2 overflow-x-auto pt-2 pb-4'>
                     {
                         similarProducts.map((item, index) => (
-                            <div className='flex-shrink-0' key={index}>
+                            <div className='flex-shrink-0 w-44' key={index}>
                                 <ProductItem
                                     key={index}
                                     slug={item.slug}
@@ -124,10 +124,10 @@ const Index = async ({ params : { productId : id } }) => {
                         <p className='font-montserrat text-sm md:text-lg font-semibold text-white'>Vendor Products</p>
                     </div>
 
-                        <div className='flex gap-4 overflow-x-auto pt-2 pb-4'>
+                        <div className='flex gap-2 overflow-x-auto pt-2 pb-4'>
                         {
                                 vendorProducts.map((item, index) => (
-                                    <div className='flex-shrink-0' key={index}>
+                                    <div className='flex-shrink-0 w-44' key={index}>
                                         <ProductItem
                                             key={index}
                                             id={item.id}

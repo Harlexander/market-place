@@ -23,12 +23,12 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 })
 
-// const lato = Lato({
-//   subsets: ['latin'],
-//   display: 'swap',
-//   variable: '--font-lato',
-//   weight: ['100', '300', '400', '700']
-// })
+const lato = Lato({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-lato',
+  weight: ['100', '300', '400', '700']
+})
 
 export default function RootLayout({ children }) {
 
@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider>
-        <html lang="en" className={`${montserrat.variable} ${figtree.variable}`} >
+        <html lang="en" className={`${montserrat.variable} ${lato.variable} ${figtree.variable}`} >
           <head>
             <title>
                 Uniben Online Market

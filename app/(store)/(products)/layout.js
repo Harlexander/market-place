@@ -1,14 +1,32 @@
+"use client"
 import Breadcrumb from '@/components/Breadcrumb Menu/Breadcrumb'
 import CategoryList from '@/components/Cards/CategoryList'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 
+function getCategoryArray(url) {
+  const categories = url.split('/').filter(item => item !== ''); // Split the URL and remove empty items
+
+  const categoryArray = [];
+  let href = '';
+  categories.forEach((category, index) => {
+    href += `/${category}`;
+    if (index !== 0) {
+      // Exclude the first item (category 'category')
+      categoryArray.push({ title: category.replace('-', ' '), href });
+    }
+  });
+
+  return categoryArray;
+}
+
 const Index = ({children}) => {
+  const paths = usePathname();
 
   const path = [{
     title : "Home",
     href : "/"
-  }];
+  }, ...getCategoryArray(paths)];
 
   return (
     <>
