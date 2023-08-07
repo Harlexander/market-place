@@ -7,23 +7,25 @@ const Chat = ({messages, senderId : id, user}) => {
   const [ msg, setMsg] = useState(messages);
 
   useEffect(() => {
-    setMsg(messages)
+    setMsg(messages);
+    console.log('change')
   }, [messages]);
 
   const messagesRef = useRef(null);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [msg]);
 
   const scrollToBottom = () => {
-    messagesRef.current.scrollIntoView()
+    console.log('scroll')
+    messagesRef?.current?.scrollIntoView({ behaviour : 'smooth'})
   };
 
   console.log(msg);
 
   return (
-    <div ref={messagesRef} className='flex-grow overflow-y-auto flex flex-col gap-2'>   
+    <div className='flex-grow overflow-y-auto flex flex-col gap-2'>   
     {
       msg.map(({message, createdAt, senderId, product}, index) => (
         <ChatMessage
@@ -36,7 +38,7 @@ const Chat = ({messages, senderId : id, user}) => {
           />  
       ))
     }     
-    <div ref={messagesRef}></div>   
+    <div ref={messagesRef}/>   
 </div>
   )
 }
