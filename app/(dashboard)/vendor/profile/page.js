@@ -4,6 +4,7 @@ import moment from 'moment/moment'
 import { EditProfileModal } from '@/components/Modals/EditProfile'
 import EditButton from '@/components/Profile/EditButton'
 import { userId } from '@/lib/userId'
+import { prisma } from '@/lib/prismadb'
 
 const Index = async () => {
   const id = await userId();
