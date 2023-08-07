@@ -2,17 +2,20 @@
 import Chat from '@/components/Chat-Sytem/Chat';
 import ChatInput from '@/components/Chat-Sytem/ChatInput';
 import { useProductHighlight } from '@/hooks/useProductHighlight';
+import { followUser } from '@/lib/fetcher';
 import socket from '@/lib/socket';
 import { faHeart, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react'
+import { useMutation } from 'react-query';
 
 const ChatProvider = ({receiverId}) => {
     const { data , status } = useSession();
     const [ messages, setMessages ] = useState([]);
     const [ message, setMessage ] = useState("");
     const [ loading, setLoading ] = useState(false);
+    const [ user, setUser ] = useState({});
     const { productId } = useProductHighlight();
 
     useEffect(() => {
@@ -21,7 +24,7 @@ const ChatProvider = ({receiverId}) => {
 
           socket.emit('join', { receiverId, senderId})
 
-          socket.on("message", (msg) => {
+          socket.on("message", ({user, msg}) => {
             if (Array.isArray(msg)) {
               // If msg is an array of messages, directly update the state
               setMessages((prevMessages) => [...prevMessages, ...msg]);
@@ -30,6 +33,7 @@ const ChatProvider = ({receiverId}) => {
               setMessages((prevMessages) => [...prevMessages, msg]);
             }
             setLoading(false);
+            setUser(user);
             setMessage("");
           })
 
@@ -69,13 +73,13 @@ const ChatProvider = ({receiverId}) => {
           <div className='flex gap-4'>
             <img src="/user.png" alt="logo" className='h-10' />
             <div className='flex flex-col font-nunito' >
-              <span className=''>Peachy Collection</span>
+              <span className=''>{user.store ? user?.store.name : user?.username}</span>
               <span className='text-xs'>Active</span>
             </div>            
           </div>
 
           <div className='flex items-center text-pry'>
-            <a href="">
+            <a href={`tel:${user?.mobile}`}>
               <FontAwesomeIcon icon={faPhone}  className='text-2xl px-3'/>
             </a>
             <a>

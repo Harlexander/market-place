@@ -8,7 +8,7 @@ import { signOut } from 'next-auth/react'
 
 const Sidebar = ({navigation, userNavigation, logo}) => {
   return (
-    <div className="w-64 h-full fixed space-y-5 shadow-md bg-gray-200 hidden md:block font-[Nunito]" id="sidenavSecExample">
+    <div className="w-64 h-full fixed space-y-5 shadow-md bg-gray-200 hidden md:block font-nunito" id="sidenavSecExample">
         <div className="pt-4 pb-2 px-6">
             <a href="#!">
                 <div className="mx-auto">

@@ -19,7 +19,7 @@ const styles = {
   bg : "bg-pry",
   opacity: "bg-opacity-100",
   position: "fixed",
-  font: "font-[nunito]"
+  font: "font-nunito"
 }
 
 function classNames(...classes) {

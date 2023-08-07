@@ -24,7 +24,7 @@ export const EditProfileModal = ({ user }) => {
     return(
       <>
         <Transition appear show={isOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={toggleModal}>
+          <Dialog as="div" className="relative z-10" onClose={() => toggleModal("personal")}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -107,7 +107,7 @@ export const EditProfileModal = ({ user }) => {
                             <button
                               type="button"
                               className="inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                              onClick={toggleModal}
+                              onClick={() => toggleModal("personal")}
                             >
                               Close!
                             </button>

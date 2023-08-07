@@ -1,22 +1,21 @@
-'use client'
-
 import { UserCircleIcon } from '@heroicons/react/20/solid'
 import { CheckBadgeIcon, ClipboardDocumentIcon, ClockIcon } from '@heroicons/react/24/outline'
 import moment from 'moment/moment'
-import { useSession } from 'next-auth/react'
 import { EditProfileModal } from '@/components/Modals/EditProfile'
-import { useQuery } from 'react-query'
-import axios from 'axios'
-import { useEditProfileModal } from '@/hooks/useEditProfileModal'
+import EditButton from '@/components/Profile/EditButton'
+import { userId } from '@/lib/userId'
 
-const Index = () => {
-  const { toggleModal } = useEditProfileModal();
+const Index = async () => {
+  const id = await userId();
 
-  const { data : user, error, isLoading, isSuccess } = useQuery("user", async () => {
-    const {data} = await axios.get("/api/user");
-
-    return data;
-  });
+  const user = await prisma.user.findUnique({
+    where : {
+      id : id
+    },
+    include : {
+      store : true
+    }
+  })
 
   return (
     <div>
@@ -25,11 +24,7 @@ const Index = () => {
          <UserCircleIcon className='h-6 w-6'/>  My  Profile
         </p> 
 
-        {
-          isSuccess && (
-            <EditProfileModal user={user}/>
-          )
-        }
+        <EditProfileModal user={user}/>
 
         <ProfileContainer user={user}/>
 
@@ -43,7 +38,7 @@ const Index = () => {
               <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><span>Mobile:</span><input disabled className='text-right py-2' defaultValue={user?.mobile}/></li>
               <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><span>ID:</span><input disabled className='text-right py-2' defaultValue={user?.id}/></li>
               <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><span>Location:</span><input disabled className='text-right py-2' defaultValue={user?.residential_address}/></li>
-              <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><button onClick={() => toggleModal("personal")} className='bg-pry w-full rounded py-1 text-white'>Edit</button></li>
+              <EditButton type={"personal"}/>
             </ul>
           </div>
 
@@ -57,7 +52,7 @@ const Index = () => {
               <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><span>Business Type:</span><input disabled className='text-right py-2' defaultValue={user?.store?.type}/></li>
               <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><span>Location:</span><input disabled className='text-right py-2' defaultValue={user?.store?.location}/></li>
               <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><span>Description:</span><textarea disabled rows={3} className='text-right h-full' defaultValue={user?.store?.description}/></li>
-              <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><button onClick={() => toggleModal("business")} className='bg-pry w-full rounded py-1 text-white'>Edit</button></li>
+              <EditButton type={"business"}/>
             </ul>
           </div> 
     </div> 
@@ -70,7 +65,7 @@ const ProfileContainer = ({user}) => {
   return(
     <div className='bg-white rounded-xl p-8 grid md:grid-cols-12'>
       <div className='md:p-8 p-2 col-span-3'>
-        <img src={user?.image ? user.image : "/user.png"} className='h-full w-full'/>
+        <img src={user?.image ? user.image : "/user.png"} className='sm:h-full w-full'/>
       </div>
 
       <div className='col-span-9 font-montserrat space-y-5'>

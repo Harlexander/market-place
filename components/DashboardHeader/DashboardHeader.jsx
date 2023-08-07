@@ -26,7 +26,7 @@ const DashboardHeader = ({navigation, userNavigation}) => {
 
   return (
     <>
-        <Disclosure as="nav" className="font-[Nunito] bg-gray-200">
+        <Disclosure as="nav" className="font-nunito bg-gray-200">
     {({ open }) => (
       <>
         <div className="max-w-7xl sm:px-6 lg:px-8 bg-gray-200">
@@ -154,7 +154,7 @@ const DashboardHeader = ({navigation, userNavigation}) => {
     )}
     </Disclosure>
     <SideMenu open={open} setOpen={setOpen} >
-    <div className="h-full  space-y-3 font-[Nunito]" id="sidenavSecExample">
+    <div className="h-full  space-y-3 font-nunito" id="sidenavSecExample">
     <ul className="relative px-1 pt-6">
         {
             navigation.map(({name, href, sublink, icon}, index) => (

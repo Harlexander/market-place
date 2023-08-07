@@ -3,7 +3,7 @@ import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import ChatMessage from './ChatMessage';
 
-const Chat = ({messages, senderId : id}) => {
+const Chat = ({messages, senderId : id, user}) => {
   const [ msg, setMsg] = useState(messages);
 
   useEffect(() => {
@@ -19,6 +19,8 @@ const Chat = ({messages, senderId : id}) => {
   const scrollToBottom = () => {
     messagesRef.current.scrollIntoView()
   };
+
+  console.log(msg);
 
   return (
     <div ref={messagesRef} className='flex-grow overflow-y-auto flex flex-col gap-2'>   

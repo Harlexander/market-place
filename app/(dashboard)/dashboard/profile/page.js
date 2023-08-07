@@ -1,22 +1,19 @@
-'use client'
-
 import { UserCircleIcon } from '@heroicons/react/20/solid'
-import { CheckBadgeIcon, ClipboardDocumentIcon, ClockIcon } from '@heroicons/react/24/outline'
+import { CheckBadgeIcon, ClockIcon } from '@heroicons/react/24/outline'
 import moment from 'moment/moment'
-import { useSession } from 'next-auth/react'
 import { EditProfileModal } from '@/components/Modals/EditProfile'
-import { useQuery } from 'react-query'
-import axios from 'axios'
-import { useEditProfileModal } from '@/hooks/useEditProfileModal'
+import EditButton from '@/components/Profile/EditButton'
+import { userId } from '@/lib/userId'
+import { prisma } from '@/lib/prismadb'
 
-const Index = () => {
-  const { toggleModal } = useEditProfileModal();
+const Index = async () => {
+  const id = await userId();
 
-  const { data : user, error, isLoading, isSuccess } = useQuery("user", async () => {
-    const {data} = await axios.get("/api/user");
-
-    return data;
-  });
+  const user = await prisma.user.findUnique({
+    where : {
+      id : id
+    }
+  })
 
   return (
     <div>
@@ -43,7 +40,7 @@ const Index = () => {
               <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><span>Mobile:</span><input disabled className='text-right py-2' defaultValue={user?.mobile}/></li>
               <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><span>ID:</span><input disabled className='text-right py-2' defaultValue={user?.id}/></li>
               <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><span>Location:</span><input disabled className='text-right py-2' defaultValue={user?.residential_address}/></li>
-              <li className="px-6 py-4 flex justify-between items-center border-b border-gray-200 w-full"><button onClick={() => toggleModal("personal")} className='bg-pry w-full rounded py-1 text-white'>Edit</button></li>
+              <EditButton type={"personal"}/>
             </ul>
           </div>
     </div> 

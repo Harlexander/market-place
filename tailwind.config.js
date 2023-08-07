@@ -20,10 +20,10 @@ module.exports = {
       },
     },
     fontFamily: {
-      montserrat : ['Montserrat', 'san-serif'],
-      nunito : ['Figtree', 'Montserrat'],
-      lato : ['Figtree','Montserrat'],
-      curve : ['DM Serif Display', 'Montserrat']
+      montserrat : ['var(--font-montserrat)'],
+      nunito : ['var(--font-figtree)'],
+      lato : ['var(--font-lato)'],
+      curve : ['var(--font-dm-serif)']
     }
   },
   plugins: [

@@ -7,26 +7,20 @@ import { ChevronRightIcon, ClockIcon, EnvelopeIcon, MinusCircleIcon, PlusCircleI
 import React, { useEffect, useState, useTransition } from 'react'
 import ProductItem from '@/components/Cards/ProductItem'
 import { useMutation, useQuery } from 'react-query'
-import axios from 'axios'
 import moment from 'moment/moment'
 import { BuildingStorefrontIcon } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/navigation'
 import { revalidate } from '@/lib/revalidate'
 import { ScaleLoader } from 'react-spinners'
+import { followUser, newReview } from '@/lib/fetcher'
 
 const Overview = ({ vendor, user}) => {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
 
-    const addReview = useMutation(async reviewData => {
-        const res = await axios.post("/api/reviews", reviewData)
-        return res.data;
-    }, { onSuccess : () => revalidate(startTransition, router)});
+    const addReview = useMutation(async reviewData => await newReview(reviewData), { onSuccess : () => revalidate(startTransition, router)});
     
-    const follow = useMutation(async followerData => {
-       const res = await axios.post("/api/follower", followerData)
-        return res.data;
-    }, { onSuccess : () => revalidate(startTransition, router)});
+    const follow = useMutation(async followerData => await followUser(followerData), { onSuccess : () => revalidate(startTransition, router)});
     
     const action = (status = "follow") => {
             follow.mutate({vendorId : vendor.id, status : status, followId : vendor.follower[0]?.id})            
