@@ -59,32 +59,35 @@ const Index = async () => {
         <p className='text-xs md:text-sm text-pry font-lato'>Welcome to Uniben Online Market</p>
       </div>
 
-      <div className='grid sm:grid-cols-4 gap-2 md:gap-4'>
-        <DashboardCard
-        title={'Products'}
-        value="131"
-        icon={<FontAwesomeIcon icon={faCube} className="text-2xl"/>}
-        subtitle={"0% this week"}
-        />
-        <DashboardCard
-        title={'Reviews'}
-        value="10"
-        icon={<FontAwesomeIcon icon={faRankingStar} className="text-2xl"/>}
-        subtitle={"0% Average rating 3 stars"}
-        />
-        <DashboardCard
-        title={'Active Messages'}
-        value="131"
-        icon={<FontAwesomeIcon icon={faEnvelope} className="text-2xl"/>}
-        subtitle={"0% increase this week"}
-        />
-        <DashboardCard
-        title={'Page Visit'}
-        value="131"
-        icon={<FontAwesomeIcon icon={faChartBar} className="text-2xl"/>}
-        subtitle={"0% increase this week"}
-        />
-      </div>
+    <div className='relative'>
+        <div className='flex justify-between overflow-x-auto gap-2 md:gap-4'>
+          <DashboardCard
+          title={'Products'}
+          value="131"
+          icon={<FontAwesomeIcon icon={faCube} className="text-2xl"/>}
+          subtitle={"0% this week"}
+          />
+          <DashboardCard
+          title={'Reviews'}
+          value="10"
+          icon={<FontAwesomeIcon icon={faRankingStar} className="text-2xl"/>}
+          subtitle={"0% Average rating 3 stars"}
+          />
+          <DashboardCard
+          title={'Active Messages'}
+          value="131"
+          icon={<FontAwesomeIcon icon={faEnvelope} className="text-2xl"/>}
+          subtitle={"0% increase this week"}
+          />
+          <DashboardCard
+          title={'Page Visit'}
+          value="131"
+          icon={<FontAwesomeIcon icon={faChartBar} className="text-2xl"/>}
+          subtitle={"0% increase this week"}
+          />
+        </div>
+
+    </div>
 
       <div className='grid md:grid-cols-12 gap-4 md:gap-8'>
         <div className='space-y-3 bg-white shadow-lg p-5 rounded md:col-span-8'>

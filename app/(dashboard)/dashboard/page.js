@@ -56,7 +56,8 @@ const Index = async () => {
         <p className='text-xs md:text-sm text-pry font-lato'>Welcome to Uniben Online Market</p>
       </div>
 
-      <div className='grid sm:grid-cols-3 gap-2 md:gap-4'>
+      <div className='relative'>
+        <div className='flex justify-between overflow-x-auto gap-2 md:gap-4'>
         <DashboardCard
         title={'Balance'}
         value="131"
@@ -75,6 +76,7 @@ const Index = async () => {
         icon={<FontAwesomeIcon icon={faEnvelope} className="text-2xl"/>}
         subtitle={"0% increase this week"}
         />
+        </div>
       </div>
 
       <div className='grid md:grid-cols-12 gap-4 md:gap-8'>

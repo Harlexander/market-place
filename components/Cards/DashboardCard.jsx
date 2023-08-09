@@ -4,8 +4,8 @@ import { faChartLine } from '@fortawesome/free-solid-svg-icons'
 
 const DashboardCard = ({title, value, icon, subtitle}) => {
   return (
-    <div className='rounded text-white shadow-lg bg-pry p-5 space-y-3'>
-        <div className='flex justify-between items-start'>
+    <div className='rounded text-white shadow-lg bg-pry flex-1 p-5 space-y-3'>
+        <div className='flex justify-between gap-16 sm:gap-0 items-start'>
             <div className='space-y-2'>
                 <p className='font-montserrat text-xs text-gray-200 font-semibold'>{title}</p>
                 <p className='font-montserrat text-3xl font-bold'>{value}</p>
