@@ -38,7 +38,6 @@ const ChatProvider = ({receiverId}) => {
           })
 
           socket.emit('read_messages', { senderId : senderId, receiverId : receiverId } )
-
           socket.emit('open_messages', { senderId : senderId, receiverId : receiverId } )
 
           socket.on('connect', ()=> console.log("connect"));

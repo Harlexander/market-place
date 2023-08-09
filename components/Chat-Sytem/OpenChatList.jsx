@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const OpenChatList = ({data}) => {
+    console.log(data);
   return (
     <div className=''>
         {

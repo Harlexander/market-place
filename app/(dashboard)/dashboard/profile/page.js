@@ -22,11 +22,7 @@ const Index = async () => {
          <UserCircleIcon className='h-6 w-6'/>  My  Profile
         </p> 
 
-        {
-          isSuccess && (
-            <EditProfileModal user={user}/>
-          )
-        }
+        <EditProfileModal user={user}/>
 
         <ProfileContainer user={user}/>
 

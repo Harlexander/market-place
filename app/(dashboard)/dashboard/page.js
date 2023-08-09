@@ -2,14 +2,17 @@ import DashboardCard from '@/components/Cards/DashboardCard'
 import FollowersTable from '@/components/Table/FollowersTable'
 import TopProduct from '@/components/Table/TopProduct'
 import Wishlist from '@/components/Table/WishlistTable'
+import { authOptions } from '@/lib/authOptions'
 import { prisma } from '@/lib/prismadb'
 import { userId } from '@/lib/userId'
 import { faChartBar, faCube, faEnvelope, faRankingStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getServerSession } from 'next-auth'
 import React from 'react'
 
 const Index = async () => {
   const id = await userId();
+  const session = await getServerSession(authOptions);
 
   const wishList = await prisma.wishlist.findMany({
     orderBy : {
@@ -46,12 +49,10 @@ const Index = async () => {
 
     const following = (followers.map(({vendor}) => ({ user : { username : vendor.name, image : vendor.logo}})));
 
-    console.log(following);
-
   return (
     <div className='p-5 md:p-10 space-y-8'>
       <div>
-        <p className='font-montserrat font-semibold md:text-2xl'>Hello Dunkwu,</p>
+        <p className='font-montserrat font-semibold capitalize md:text-2xl'>Hello {session?.user?.username},</p>
         <p className='text-xs md:text-sm text-pry font-lato'>Welcome to Uniben Online Market</p>
       </div>
 

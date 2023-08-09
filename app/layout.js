@@ -4,6 +4,7 @@ import { SessionProvider } from 'next-auth/react';
 import './globals.css'
 import { QueryClient, QueryClientProvider } from 'react-query';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import Chart from 'chart.js/auto'
 
 // export const metadata = {
 //   title: 'Uniben Online Market',
