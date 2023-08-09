@@ -1,8 +1,8 @@
 import { productImage } from '@/lib/imagePath'
-import { EyeIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
 import React from 'react'
 
-const TopProduct = ({data= []}) => {
+const Wishlist = ({data= []}) => {
   return (
     <div className="flex flex-col">
   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -11,7 +11,7 @@ const TopProduct = ({data= []}) => {
         <table className="min-w-full">
           <tbody>
             {
-              data.map(({name, slug, images, id, views, price}, index) => (
+              data.map(({ product : { name, slug, images, id, views, price }}, index) => (
                 <tr key={index} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                   <td className="text-sm text-gray-900 font-light md:px-6 md:py-4 whitespace-nowrap">
                     <div style={{ width : "50px"}}>
@@ -24,9 +24,12 @@ const TopProduct = ({data= []}) => {
                     </p>
                     <p className='font-bold font-montserrat'>N{price.toLocaleString()}</p>
                   </td>
-                  <td className="text-sm font-nunito flex flex-col justify-between items-center text-gray-900 font-light md:px-6 md:py-4 whitespace-nowrap">
-                    <EyeIcon className='h-4'/>
-                    {views}
+                  <td className="text-sm text-white font-nunito flex flex-col justify-between items-center text-gray-900 font-light md:px-6 md:py-4 whitespace-nowrap">
+                    <Link href={`/product/${slug}-${id}`}>
+                        <button className='bg-pry rounded shadow-xl px-4 py-2'>
+                            View
+                        </button>                    
+                    </Link>
                   </td>
                 </tr>
               ))
@@ -40,4 +43,4 @@ const TopProduct = ({data= []}) => {
   )
 }
 
-export default TopProduct
+export default Wishlist

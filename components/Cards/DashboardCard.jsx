@@ -4,19 +4,22 @@ import { faChartLine } from '@fortawesome/free-solid-svg-icons'
 
 const DashboardCard = ({title, value, icon, subtitle}) => {
   return (
-    <div className='rounded-3xl text-white shadow-lg bg-pry p-5 grid grid-cols-6'>
-        <div className='col-span-4 space-y-2 md:space-y-4'>
-            <p className='font-montserrat text-sm text-gray-200 font-semibold'>{title}</p>
-            <p className='font-montserrat text-4xl font-bold'>{value}</p>
-            <div className='flex gap-3 items-center'>
-                <FontAwesomeIcon icon={faChartLine} className="text-sm text-green-500"/>
-                <span className='font-montserrat text-xs'>
-                    {subtitle}
-                </span>
+    <div className='rounded text-white shadow-lg bg-pry p-5 space-y-3'>
+        <div className='flex justify-between items-start'>
+            <div className='space-y-2'>
+                <p className='font-montserrat text-xs text-gray-200 font-semibold'>{title}</p>
+                <p className='font-montserrat text-3xl font-bold'>{value}</p>
             </div>
-        </div>
-        <div className='col-span-2 flex justify-end items-center'>
-            {icon}
+
+            <div className='col-span-2 flex justify-end items-center'>
+                {icon}
+            </div>
+        </div>            
+        <div className='flex gap-3 items-center'>
+            <FontAwesomeIcon icon={faChartLine} className="text-sm text-green-500"/>
+            <span className='font-montserrat text-[10px]'>
+                {subtitle}
+            </span>
         </div>
     </div>
   )
