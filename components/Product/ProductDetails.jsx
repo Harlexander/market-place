@@ -33,6 +33,10 @@ export const ProductDetails = ({data, vendorId, isVendor}) => {
                 <ClockIcon className='h-5 text-pry'/>
                 <span>Uploaded {moment(data.createdAt).subtract(1, "calender").fromNow()}</span>
             </div>
+
+            <div>
+                <p className="font-bold font-montserrat text-3xl">&#8358;{data.price.toLocaleString()}</p>
+            </div>
             <Description description={data.description}/>
             <div className='flex gap-4 justify-between'>
                 <button onClick={chatVendor} className='py-2 border text-pry border-pry font-nunito w-full rounded-lg'>
