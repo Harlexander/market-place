@@ -4,9 +4,11 @@ import { Dialog } from '@headlessui/react'
 import { ArrowRightIcon } from '@heroicons/react/20/solid'
 import LongText from '../Text/LongText'
 import { productImage } from '@/lib/imagePath'
+import { useImageModal } from '@/hooks/useImageModal'
+import Link from 'next/link'
 
 const EditProduct = ({isOpen, setIsOpen, data}) => {
-    
+      const { toggleModal } = useImageModal();
       return (
         <Dialog
           open={isOpen}
@@ -39,7 +41,7 @@ const EditProduct = ({isOpen, setIsOpen, data}) => {
                 <div className='flex md:grid grid-cols-5 gap-4 overflow-x-auto'>
                   {
                     data.images.map(({image}, index) => (
-                      <img src={productImage+image} key={index} alt="img" className='h-20 w-20'/>
+                      <img onClick={() => toggleModal(productImage+image)} src={productImage+image} key={index} alt="img" className='h-28 w-28'/>
                     ))
                   }
                 </div>
@@ -61,9 +63,9 @@ const EditProduct = ({isOpen, setIsOpen, data}) => {
 
                     </ul>
                 </div>
-                <div>
+                <Link href={`/vendor/products/${data.id}`}>
                     <button className='rounded w-full bg-blue-400 py-2'>Edit Product</button>
-                </div>
+                </Link>
               </Dialog.Panel>
             </div>
           </div>

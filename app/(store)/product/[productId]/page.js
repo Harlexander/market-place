@@ -1,6 +1,7 @@
 import Breadcrumb from '@/components/Breadcrumb Menu/Breadcrumb';
 import ProductItem from '@/components/Cards/ProductItem';
 import VendorWindow from '@/components/Cards/VendorWindow'
+import ImageModal from '@/components/Modals/Image';
 import { Images } from '@/components/Product/Images';
 import { ProductDetails } from '@/components/Product/ProductDetails';
 import { authOptions } from '@/lib/authOptions';
@@ -81,6 +82,7 @@ const Index = async ({ params : { productId : id } }) => {
   return (
     <>
         <Breadcrumb items={path}/>
+        <ImageModal/>
         <div className="sm:space-y-12">
             <div className='md:px-10 md:grid gap-5 md:grid-cols-12 '>
                 <div className='col-span-9 bg-white p-5 md:grid md:grid-cols-5'>

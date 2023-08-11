@@ -7,7 +7,7 @@ import React from 'react'
 
 const HeroPage = () => {
   return (
-    <div className='bg-pry py-24 md:py-40 px-5 md:px-20 space-y-10'>
+    <div className='relative bg-pry py-24 md:py-40 px-5 md:px-20 space-y-10'>
         <div className='text-center text-white space-y-1'>
             <p className='text-xl md:text-4xl font-montserrat'>The Biggest Online Market For Uniben Students</p>
             <p className='font-nunito md:text-xl text-sm'>Buy and sell from the comfort of your home</p>
@@ -21,6 +21,8 @@ const HeroPage = () => {
                 <p>Search</p>
             </button>
         </div>
+
+        {/* <img src="/peachy.png" alt="img" className='absolute h-52 right-0 bottom-0' /> */}
         <div className='flex gap-5 flex-wrap justify-center'>
             {
                 categories.map(({category, subcategories}, index) => (

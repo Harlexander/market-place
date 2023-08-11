@@ -5,6 +5,7 @@ import './globals.css'
 import { QueryClient, QueryClientProvider } from 'react-query';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import Chart from 'chart.js/auto'
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 // export const metadata = {
 //   title: 'Uniben Online Market',

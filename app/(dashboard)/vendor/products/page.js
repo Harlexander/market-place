@@ -49,7 +49,6 @@ const Index = () => {
             index={index}
             setActive={setActive}/>            
             </>
-
           ))
         }
       </div>

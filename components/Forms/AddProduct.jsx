@@ -1,3 +1,5 @@
+"use client"
+
 import { faPlusCircle, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Switch } from '@headlessui/react';
@@ -14,18 +16,29 @@ import { Badge } from '../Product/Badge';
 import { Description } from '../Product/Description';
 import { Features } from '../Product/Features';
 import Toggler from './Components/Toggler';
+import { productImage } from '@/lib/imagePath';
+import { Carousel } from 'react-responsive-carousel';
 
-const AddProduct = () => {
+const AddProduct = ({product}) => {
   const [preview, setPreview] = useState(false);
-
   const { mutate, isLoading, isSuccess, isError, error, data } = useMutation(details => uploadProduct(details));
 
   const uploadProduct = async (details) => {
     try {
-      const fileUrl = await storeImage(details.images);
-      const data = { ...details, images : fileUrl };
-      const upload = await axios.post("/api/products/upload", data)
-      return upload.data;      
+      // check if image is a file object or string to filter aready uploaded images
+      let images = details.images.filter(item => (typeof item.image !== "string"));
+      const fileUrl = await storeImage(images);
+      const data = { ...details, images : [...fileUrl, ...product?.images] };
+
+      let request;
+
+      if(product){
+        request = await axios.put("/api/products/upload", {id : product?.id, ...data})
+      }else{
+        request = await axios.post("/api/products/upload", data)
+      }
+
+      return request.data;      
     } catch (error) {
       throw Error(error)
     }
@@ -52,16 +65,16 @@ const AddProduct = () => {
   return (
     <Formik
       initialValues={{
-        productName: '',
-        description: '',
-        category : "",
-        subcategory : "",
-        features : [{ feature: "" }],
-        images : [],
-        negotiable: true,
-        pre_order : false, 
-        brand_new : false,
-        price : 0,
+        productName: product?.name || "",
+        description: product?.description || '',
+        category : product?.category || '',
+        subcategory : product?.subcategory || "",
+        features : product?.features || [{ feature: "" }],
+        images : product?.images || [],
+        negotiable: product?.negotiable || true,
+        pre_order : product?.pre_order || false, 
+        brand_new : product?.brand_new || false,
+        price : product?.price || 0,
       }}
 
       onSubmit={async (values)  => {
@@ -298,12 +311,16 @@ const AddProduct = () => {
 
                     <div className='flex flex-wrap'>
                       {
-                        values.images.map((item, index) => (
-                          <div className='relative w-3/6' key={index}>
-                              <XMarkIcon className='h-8 absolute' onClick={() => removeItem(index, values.images, setFieldValue, "images")}/>
-                              <img  className='object-fit' src={URL.createObjectURL(item.image)} alt="" />
-                          </div>
-                        ))
+                        values.images.map((item, index) => {
+                          let image = typeof item.image === "string" ? productImage+item.image : URL.createObjectURL(item.image)
+                          console.log(image);
+                          return(
+                            <div className='relative w-3/6' key={index}>
+                                <XMarkIcon className='h-8 absolute' onClick={() => removeItem(index, values.images, setFieldValue, "images")}/>
+                                <img  className='object-fit' src={image} alt="" />
+                            </div>
+                          )
+                        })
                       }
                     </div>
                   </div>
@@ -396,46 +413,21 @@ const Preview = ({images, values}) => {
   return(
     <div className='px-2'>
       <div className='md:col-span-2'>
-          <div id="carouselExampleIndicators" className="carousel slide relative" data-bs-ride="carousel">
-          <div className="carousel-inner relative w-full overflow-hidden">
+          <Carousel showArrows={true}>
           {
-              images.map(({image}, index) => (
-                  <div key={index} className={`carousel-item float-left w-full ${index == 0 && "active"}`}>
+              images.map((item, index) => {
+                let image = typeof item.image === "string" ? productImage+item.image : URL.createObjectURL(item.image)
+                return(
+                  <div key={index} className={`w-full`}>
                       <img
-                          src={URL.createObjectURL(image)}
+                          src={image}
                           className="block w-full"
                           alt="product"
                       />
                   </div>
-              ))
+              )})
           }
-          </div>
-          <button
-              className="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide="prev"
-          >
-              <span className="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-              <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-              className="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide="next"
-          >
-              <span className="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-              <span className="visually-hidden">Next</span>
-          </button>
-          </div>
-      <div className='flex block flex-wrap justify-start gap-3 py-5'>
-          {
-              images.map(({image}, index) => (
-                  <img src={URL.createObjectURL(image)} key={index} className="h-10 w-10"/>
-              ))
-          }
-      </div>
+          </Carousel>
       </div>
       <div className='col-span-3 space-y-6'>
         <p className='font-lato text-3xl font-semibold'>{values.productName}</p>

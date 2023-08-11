@@ -10,7 +10,7 @@ import React from 'react'
 const Index = async () => {
   const id = await userId();
 
-  const { id: businessId } = await prisma.user.findUnique({
+  const { store : { id : businessId} } = await prisma.user.findUnique({
       where : {
         id : id
       },
@@ -23,7 +23,12 @@ const Index = async () => {
       }
   })
 
+  console.log(businessId)
+
   const topProducts = await prisma.product.findMany({
+    where  : {
+      businessId : businessId
+    },
     orderBy : {
       views : "desc"
     },

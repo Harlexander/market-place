@@ -7,12 +7,19 @@ import { Features } from "./Features"
 import moment from "moment"
 import { useRouter } from "next/navigation"
 import { useProductHighlight } from "@/hooks/useProductHighlight"
+import { HeartIcon } from "@heroicons/react/24/outline"
+import { ScaleLoader } from "react-spinners"
+import { useMutation } from "react-query"
+import axios from "axios"
 
 export const ProductDetails = ({data, vendorId, isVendor}) => {
     const router = useRouter();
     const  { setProductId } = useProductHighlight();
 
-    console.log(isVendor);
+    const wishList = useMutation(async productId => {
+        const { data } = await axios.post("/api/products/wishlist", { productId : productId })
+        return data;
+     })
 
     const chatVendor = async () => {
       const product = { productId : data.id, productName : data.name, productPrice : data.price, productImage : data.images[0].image}
@@ -50,6 +57,25 @@ export const ProductDetails = ({data, vendorId, isVendor}) => {
 
             </div>
             <Features features={data.features}/>
+
+            <div className='py-2 md:hidden'>
+                <button onClick={() => wishList.mutate(data.id)} className='text-pry py-2 font-nunito px-3 bg-opacity-80 bg-pry-200 rounded w-full flex items-center justify-center gap-4'>
+                    <HeartIcon className='h-6 w-6'/>
+                    {
+                        wishList.isLoading && (<ScaleLoader height={16} className="text-pry"/>)
+                    }
+                    {
+                        wishList.isIdle && (
+                            <>
+                            Add to wishlist
+                            </>
+                        )
+                    }
+                    {
+                        wishList.isSuccess && (wishList.data)
+                    }
+                </button>
+            </div>
         </div>
     )
 }

@@ -15,6 +15,9 @@ const Index = async () => {
   const session = await getServerSession(authOptions);
 
   const wishList = await prisma.wishlist.findMany({
+    where : {
+      id : id
+    },
     orderBy : {
       createdAt : "desc"
     },

@@ -44,3 +44,33 @@ export async function POST(req){
         return NextResponse.json(error, { status : 401 })
     }
 }
+
+export async function PUT(req){
+    try {
+        const data = await req.json();
+
+        const update = await prisma.product.update({
+            where : {
+                id : data.id
+            },
+            data : {
+                slug : data.slug,
+                name : data.productName,
+                category : data.category,
+                subcategory : data.subcategory,
+                description : data.description,
+                price : data.price,
+                images : data.images,
+                features : data.features,
+                negotiable : data.negotiable,
+                pre_order : data.pre_order,
+                brand_new : data.brand_new,
+            }
+        })
+
+        return NextResponse.json("Product Updated Successfully!");
+    } catch (error) {
+        console.log(error)
+        return NextResponse.json(error, { status : 401 })
+    }
+}

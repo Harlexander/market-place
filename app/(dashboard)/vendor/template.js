@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartArea, faCube, faEnvelope, faHeadphones, faHeart, faHomeAlt, faStar, faUpload, faUser, faUserAlt, faUserCheck } from '@fortawesome/free-solid-svg-icons'
+import { faChartArea, faChartPie, faCube, faEnvelope, faHeadphones, faHeart, faHomeAlt, faStar, faStore, faUpload, faUser, faUserAlt, faUserCheck } from '@fortawesome/free-solid-svg-icons'
 import Sidebar from "@/components/Sidebar/Sidebar";
 import DashboardHeader from "@/components/DashboardHeader/DashboardHeader";
 
@@ -15,9 +15,14 @@ const user = {
 
 const navigation = [
   { 
-    name: 'Home', 
+    name: 'Back To Store', 
+    href: '/', 
+    icon:  <FontAwesomeIcon icon={faStore}/>, current: true 
+  },
+  { 
+    name: 'Overview', 
     href: '/vendor', 
-    icon:  <FontAwesomeIcon icon={faHomeAlt}/>, 
+    icon:  <FontAwesomeIcon icon={faChartPie}/>, 
     current: true 
   },
   { 

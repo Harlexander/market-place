@@ -2,15 +2,20 @@
 
 import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faHeadphones, faHeart, faHomeAlt, faStar, faUpload, faUser, faUserAlt, faUserCheck } from '@fortawesome/free-solid-svg-icons'
+import { faChartPie, faEnvelope, faHeadphones, faHeart, faHomeAlt, faStar, faStore, faUpload, faUser, faUserAlt, faUserCheck } from '@fortawesome/free-solid-svg-icons'
 import Sidebar from "@/components/Sidebar/Sidebar";
 import DashboardHeader from "@/components/DashboardHeader/DashboardHeader";
 
 const navigation = [
   { 
+    name: 'Back To Store', 
+    href: '/', 
+    icon:  <FontAwesomeIcon icon={faStore}/>, current: true 
+  },
+  { 
     name: 'Overview', 
     href: '/dashboard', 
-    icon:  <FontAwesomeIcon icon={faHomeAlt}/>, current: true 
+    icon:  <FontAwesomeIcon icon={faChartPie}/>, current: true 
   },
   { 
     name: 'Saved Items', 
