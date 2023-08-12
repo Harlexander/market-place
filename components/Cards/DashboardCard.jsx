@@ -15,12 +15,12 @@ const DashboardCard = ({title, value, icon, subtitle}) => {
                 {icon}
             </div>
         </div>            
-        <div className='flex gap-3 items-center'>
+        {/* <div className='flex gap-3 items-center'>
             <FontAwesomeIcon icon={faChartLine} className="text-sm text-green-500"/>
             <span className='font-montserrat text-[10px]'>
                 {subtitle}
             </span>
-        </div>
+        </div> */}
     </div>
   )
 }

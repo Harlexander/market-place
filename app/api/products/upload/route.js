@@ -49,24 +49,36 @@ export async function PUT(req){
     try {
         const data = await req.json();
 
-        const update = await prisma.product.update({
+        console.log(data);
+
+        const product = await prisma.product.findUnique({
             where : {
                 id : data.id
-            },
-            data : {
-                slug : data.slug,
-                name : data.productName,
-                category : data.category,
-                subcategory : data.subcategory,
-                description : data.description,
-                price : data.price,
-                images : data.images,
-                features : data.features,
-                negotiable : data.negotiable,
-                pre_order : data.pre_order,
-                brand_new : data.brand_new,
             }
-        })
+        });
+
+        if(product){
+            product.images = data.images;
+
+            const update = await prisma.product.update({
+                where : {
+                    id : data.id
+                },
+                data : {
+                    slug : data.slug,
+                    name : data.productName,
+                    category : data.category,
+                    subcategory : data.subcategory,
+                    description : data.description,
+                    price : data.price,
+                    images : product.images,
+                    features : data.features,
+                    negotiable : data.negotiable,
+                    pre_order : data.pre_order,
+                    brand_new : data.brand_new,
+                }
+            })
+        }
 
         return NextResponse.json("Product Updated Successfully!");
     } catch (error) {

@@ -5,9 +5,9 @@ import { Line } from 'react-chartjs-2'
 
 const PageVisits = () => {
   return (
-    <div className='bg-white p-5 grid md:grid-cols-4'>
-        <div className='md:col-1 pb-5 md:space-y-4 md:flex-col gap-8 flex md:justify-center justify-between border-b-2 md:border-b-0 md:border-r-2'>
-            <div className='font-montserrat space-y-4'>
+    <div className='grid gap-4 md:grid-cols-4'>
+        <div className='md:col-1 flex flex-col gap-4'>
+            <div className='bg-white rounded shadow-xs p-5 flex-1 font-montserrat space-y-4'>
                 <p>Today&apos;s Page Visit</p>
                 <div className='flex gap-5 items-center'>
                     <span className='text-3xl font-bold'>0</span>
@@ -20,7 +20,7 @@ const PageVisits = () => {
                     <InformationCircleIcon className='h-6 w-6 text-pry'/><span className='text-xs text-gray-700'>Increase your page visit</span>
                 </div>
             </div>
-            <div className='font-montserrat space-y-4'>
+            <div className='bg-white rounded shadow-xs p-5 flex-1 font-montserrat space-y-4'>
                 <p>Total Page Visits</p>
                 <div className='flex gap-5 items-center'>
                     <span className='text-3xl font-bold'>121</span>
@@ -31,7 +31,7 @@ const PageVisits = () => {
             </div>
         </div>
 
-        <div className='md:col-span-3 py-4 md:p-4 h-[400px]'>
+        <div className='bg-white rounded shadow-xs p-5 md:col-span-3 h-[400px]'>
             <Chart/>
         </div>
     </div>

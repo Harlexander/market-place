@@ -23,8 +23,6 @@ const Index = async () => {
       }
   })
 
-  console.log(businessId)
-
   const topProducts = await prisma.product.findMany({
     where  : {
       businessId : businessId
@@ -57,6 +55,21 @@ const Index = async () => {
       }
     })
 
+    const analytics = await prisma.business.findUnique({
+      where : {
+        id : businessId
+      },
+      select : {
+        _count : {
+          select : {
+            products : true,
+            reviews : true
+          }
+        },
+        views : true
+      }
+    })
+
   return (
     <div className='p-5 md:p-10 space-y-8'>
       <div>
@@ -68,25 +81,24 @@ const Index = async () => {
         <div className='flex justify-between overflow-x-auto gap-2 md:gap-4'>
           <DashboardCard
           title={'Products'}
-          value="131"
+          value={analytics._count.products}
           icon={<FontAwesomeIcon icon={faCube} className="text-2xl"/>}
           subtitle={"0% this week"}
           />
           <DashboardCard
           title={'Reviews'}
-          value="10"
+          value={analytics._count.reviews}
           icon={<FontAwesomeIcon icon={faRankingStar} className="text-2xl"/>}
-          subtitle={"0% Average rating 3 stars"}
+          subtitle={"3 average rating"}
           />
           <DashboardCard
           title={'Active Messages'}
           value="131"
           icon={<FontAwesomeIcon icon={faEnvelope} className="text-2xl"/>}
-          subtitle={"0% increase this week"}
           />
           <DashboardCard
           title={'Page Visit'}
-          value="131"
+          value={analytics.views}
           icon={<FontAwesomeIcon icon={faChartBar} className="text-2xl"/>}
           subtitle={"0% increase this week"}
           />

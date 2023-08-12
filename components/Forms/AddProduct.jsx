@@ -26,9 +26,11 @@ const AddProduct = ({product}) => {
   const uploadProduct = async (details) => {
     try {
       // check if image is a file object or string to filter aready uploaded images
-      let images = details.images.filter(item => (typeof item.image !== "string"));
-      const fileUrl = await storeImage(images);
-      const data = { ...details, images : [...fileUrl, ...product?.images] };
+      const imageFile = details.images.filter(item => (typeof item.image !== "string"));
+      const imageUrl = details.images.filter(item => (typeof item.image === "string"));
+      const fileUrl = await storeImage(imageFile);
+      const images = [...imageUrl, ...fileUrl]
+      const data = { ...details, images : images };
 
       let request;
 
@@ -38,7 +40,7 @@ const AddProduct = ({product}) => {
         request = await axios.post("/api/products/upload", data)
       }
 
-      return request.data;      
+      return request?.data;      
     } catch (error) {
       throw Error(error)
     }
@@ -50,6 +52,7 @@ const AddProduct = ({product}) => {
     setState(key, list);
   }
 
+  console.log(error)
 
   const addInput = (state, setState, initial, key) => {
     const list = [...state, initial]
@@ -84,7 +87,7 @@ const AddProduct = ({product}) => {
           if(preview){
             mutate({...values, slug : removeSymbols(values.productName).replace(/ /g, "-").toLowerCase()}, {
               onSuccess : () => {
-                window.alert("Product Uploaded Successfully!")
+                window.alert("Successfully!")
               }
             })
           }
@@ -303,7 +306,7 @@ const AddProduct = ({product}) => {
                     <div class="flex text-sm text-gray-600">
                       <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
                         <span>Upload an image</span>
-                        <input  required id="file-upload" name="file-upload" type="file" accept='.jpg,.png,.jpeg,.gif' class="sr-only" onChange={(e) => addInput(values.images, setFieldValue, { "image" : e.currentTarget.files[0] }, "images")}/>
+                        <input id="file-upload" name="file-upload" type="file" accept='.jpg,.png,.jpeg,.gif' class="sr-only" onChange={(e) => addInput(values.images, setFieldValue, { "image" : e.currentTarget.files[0] }, "images")}/>
                       </label>
                       <p class="pl-1">or drag and drop</p>
                     </div>
@@ -312,12 +315,11 @@ const AddProduct = ({product}) => {
                     <div className='flex flex-wrap'>
                       {
                         values.images.map((item, index) => {
-                          let image = typeof item.image === "string" ? productImage+item.image : URL.createObjectURL(item.image)
-                          console.log(image);
+                          let image = typeof item.image !== "object" ? productImage+item.image : URL.createObjectURL(item.image)
                           return(
                             <div className='relative w-3/6' key={index}>
                                 <XMarkIcon className='h-8 absolute' onClick={() => removeItem(index, values.images, setFieldValue, "images")}/>
-                                <img  className='object-fit' src={image} alt="" />
+                                <img  className='object-fit' src={image} alt="image" />
                             </div>
                           )
                         })
