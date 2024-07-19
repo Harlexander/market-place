@@ -31,11 +31,11 @@ const Index = ({children}) => {
   return (
     <>
       <Breadcrumb items={path}/>
-      <section className='grid md:grid-cols-12 relative gap-5 px-4 md:px-10'>
-        <aside className='col-span-3 bg-transaparent relative hidden md:block'>
+      <section className='sm:grid sm:grid-cols-12 gap-5 px-4 md:px-10'>
+        <aside className='col-1 sm:col-span-3 bg-transaparent hidden md:block'>
             <CategoryList/>
         </aside>
-        <main className='col-span-9 space-y-4 rmd:space-y-8'>
+        <main className='col-1 sm:col-span-9 space-y-4 md:space-y-8'>
             {children}
         </main>
     </section>    

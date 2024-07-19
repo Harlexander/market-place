@@ -9,6 +9,8 @@ import React from 'react'
 const Index = async ({ params : { category : id }}) => {
   const category = decodeURIComponent(id).replace(/-/g, " ");
 
+  console.log(category);
+  
   const products = await prisma.product.findMany({
     where : {
       category : category
@@ -21,8 +23,8 @@ const Index = async ({ params : { category : id }}) => {
     <>
       <SectionHeader title={decodeURIComponent(category)}/>
 
-      <div className='w-full hidden sm:block overflow-hidden'>
-          <div className='flex gap-4 w-full overflow-x-auto'>
+      <div className=''>
+          <div className='gap-4 w-full flex overflow-x-auto'>
                 {
                     subcategories.map((item, index) => (
                         <Select href={`/category/${category.replace(/ /g, '-')}/${item.replace(/ /g, "-")}`} key={index} name={item}/>

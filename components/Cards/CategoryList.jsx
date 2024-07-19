@@ -13,12 +13,12 @@ const CategoryList = () => {
         </div>
         <div className='py-5'>
             {
-                categories.map((item, index) => (
-                    <Link key={index} href={`/category/${item.category.toLowerCase().replace(/ /g, "-")}`}>
+                categories.map(({Icon, category}, index) => (
+                    <Link key={index} href={`/category/${category.toLowerCase().replace(/ /g, "-")}`}>
                         <div key={index} className='flex font-nunito text-pry justify-between px-5 hover:bg-pry-300 py-2 items-center'>
                             <div className='flex items-center gap-4'>
-                            <FontAwesomeIcon icon={faShop} className="text-sm"/>
-                                <p className='capitalize'>{item.category}</p>
+                            <FontAwesomeIcon icon={Icon} className="text-sm h-4 w-4"/>
+                                <p className='capitalize'>{category}</p>
                             </div>
                             <ChevronRightIcon className='h-4'/>
                         </div>                    

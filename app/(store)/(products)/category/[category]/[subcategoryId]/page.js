@@ -3,10 +3,11 @@ import SectionHeader from '@/components/Headers/SectionHeader'
 import { Select } from '@/components/HeroPage/HeroPage';
 import categories from '@/lib/categories';
 import { prisma } from '@/lib/prismadb'
-import React from 'react'
+import React, { useMemo } from 'react'
 
-const Index = async ({ params : { subcategoryId : id }}) => {
+const Index = async ({ params : { subcategoryId:id, category }}) => {
   const subCategory = decodeURIComponent(id).replace(/-/g, " ");
+  const categoryId = decodeURIComponent(category).replace(/-/g, " ");
 
   const products = await prisma.product.findMany({
     where : {
@@ -14,15 +15,17 @@ const Index = async ({ params : { subcategoryId : id }}) => {
     }
   });
 
+  const { subcategories } =  categories.find(item => item.category.toLowerCase() == categoryId);
+
   return (
     <div className='space-y-4'>
       <SectionHeader title={subCategory}/>
 
-      <div className='w-full hidden sm:block overflow-hidden'>
+      <div className='w-full overflow-hidden'>
           <div className='flex gap-4 w-full overflow-x-auto'>
                 {
                     subcategories.map((item, index) => (
-                        <Select href={`/category/${category.replace(/ /g, '-')}/${item.replace(/ /g, "-")}`} key={index} name={item}/>
+                        <Select href={`/category/${categoryId.replace(/ /g, '-')}/${item.replace(/ /g, "-")}`} key={index} name={item}/>
                     ))
                 }
             </div>  

@@ -36,10 +36,10 @@ export default function Navbar({user}) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className={"flex w-full justify-between items-center "+styles.font}>
-              <img src={logo} className='h-8'/>
-              <div className="hidden md:block self-end">
-                <div className="ml-10 flex items-baseline space-x-10 py-5 text-[white]">
-
+              <div className="flex items-center gap-2">
+                <img src={logo} className='h-8'/>
+                <div className="text-white font-black text-2xl">
+                  Yagheki
                 </div>
               </div>
               <div className='flex gap-4 items-center'>
@@ -96,8 +96,6 @@ export default function Navbar({user}) {
     }
   ]
 export const MenuOptions = (user) => {
-
-
   const list = user?.user?.role === "BUYER" ? buyerlist : sellerlist;
 
   return (

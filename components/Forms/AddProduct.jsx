@@ -52,8 +52,6 @@ const AddProduct = ({product}) => {
     setState(key, list);
   }
 
-  console.log(error)
-
   const addInput = (state, setState, initial, key) => {
     const list = [...state, initial]
     setState(key, list);

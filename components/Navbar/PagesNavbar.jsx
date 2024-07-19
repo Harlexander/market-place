@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { MenuOptions, buyerlist, sellerlist } from './navbar'
 import categories from '@/lib/categories'
 import { ChevronRightIcon, CubeIcon } from '@heroicons/react/20/solid'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const logo = "/next.svg"
 
 const styles = {
@@ -80,7 +81,7 @@ const SideMenuContent = ({links}) => {
             <Link key={item.category} href={`/category/${item.category.replace(/ /g, "-")}`}>
               <li key={item} className='capitalize flex items-center justify-between gap-3 py-2'> 
                   <span className='flex gap-3 items-center'>
-                    <CubeIcon className='h-4 text-pry'/>{item.category} 
+                    <FontAwesomeIcon icon={item.Icon} className='h-4 w-4 text-pry'/>{item.category} 
                   </span>
                   <ChevronRightIcon className='h-4'/>
               </li>                          
