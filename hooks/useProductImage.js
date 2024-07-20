@@ -5,12 +5,14 @@ export const storeImage = async (images) => {
     const list = [];
 
     for(const image of images){
+        console.log(image);
             const formData = new FormData();
-            formData.append('image', image.image);
-            // Send a POST request to the /upload-image endpoint
-            const { data  } = await axios.post('https://peachy.ng/images/products.php', formData);
+            formData.append('file', image.image);
+            formData.append('type', "products" );            // Send a POST request to the /upload-image endpoint
+            const { data  } = await axios.post('/api/file-upload', formData);
+            console.log(data);
             // Parse the response JSON and log the path to the saved file
-            list.push({ image : data.file_path});
+            list.push({ image : data});
     }
     
     return list;        

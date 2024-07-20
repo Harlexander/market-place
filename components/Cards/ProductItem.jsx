@@ -18,7 +18,6 @@ const ProductItem = ({name, price, brandNew, image, id="#", slug, wishlist, remo
                 <p className='font-nunito text-sm'>{name.substr(0, 20)}...</p>
                 <p className='font-montserrat font-bold text-pry text-lg'>N{price.toLocaleString()}</p>
             </div>
-
           {
             wishlist && (
               <div className='flex px-3 pb-3 gap-4 text-white '>
@@ -32,7 +31,7 @@ const ProductItem = ({name, price, brandNew, image, id="#", slug, wishlist, remo
   )
 }
 
-export default ProductItem
+export default ProductItem;
 
 
 export const VendorProductItem = ({ setIsOpen, product, index, setActive}) => {
